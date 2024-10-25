@@ -2,12 +2,13 @@ package Model.ModelPlayer;
 
 import Model.Card.Card;
 import java.awt.Color;
+import java.util.ArrayList;
 
 public interface Player {
 
-  Color getColor();
+  public Color getColor();
 
-  Card[] getHand();
+  public ArrayList<Card> getHand();
 
-
+  public boolean cardExists(int cardIndex);
 }

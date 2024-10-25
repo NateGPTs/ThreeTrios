@@ -23,17 +23,13 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   @Override
-  public void playToGrid(int row, int col) {
+  public void playToGrid(int row, int col, int handIndex) {
 
     if(this.gameState != state.Ongoing) {
       throw new IllegalStateException("Game is over or not started");
     }
 
-    if((row < 0 || row >= this.grid.length) || (col < 0 || col >= this.grid[row].length) ) {
-      throw new IllegalArgumentException("Not a valid placement");
-    }
-
-    new StandardPlay(this.grid).executePlay(row, col);
+    new StandardPlay(this.grid, this.whoseTurn, handIndex).executePlay(row, col);
 
   }
 
@@ -54,11 +50,12 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   @Override
-  public void StartGame() {
+  public void startGame() {
 
     if(this.gameState != state.notStarted) {
       throw new IllegalStateException("Game has already started or is over");
     }
+
 
 
   }
