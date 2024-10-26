@@ -10,9 +10,16 @@ public interface Cell {
 
   boolean isEmpty();
 
-  void changeCardPlayer(Player player);
 
   void addCard(Card given);
 
   Card getCard();
+
+  Player whoOwns();
+
+  int getRow();
+
+  int getCol();
+
+  void setPlayer(Player player);
 }

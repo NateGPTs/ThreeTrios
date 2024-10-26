@@ -10,5 +10,12 @@ public interface Player {
 
   public ArrayList<Card> getHand();
 
-  public boolean cardExists(int cardIndex);
+
+  /**
+   * This method removes the card at the players Index, and returns it.
+   *
+   * @param cardIndex represents the card you want to remove and return.
+   * @return Card
+   */
+  public Card playCard(int cardIndex);
 }

@@ -29,14 +29,14 @@ public class StandardThreeTrios implements ThreeTriosModel {
       throw new IllegalStateException("Game is over or not started");
     }
 
-    new StandardPlay(this.grid, this.whoseTurn, handIndex).executePlay(row, col);
+    new StandardPlay(this.grid, this.whoseTurn).executePlay(row, col, handIndex);
 
   }
 
   @Override
   public Cell[][] getGrid() {
 
-
+    return this.grid;
   }
 
   @Override

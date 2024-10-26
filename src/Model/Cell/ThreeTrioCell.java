@@ -9,6 +9,28 @@ public class ThreeTrioCell implements Cell {
 
   private Boolean hole;
   private Card card;
+  private final int row;
+  private final int col;
+
+  public ThreeTrioCell(Boolean isHole, int row, int col) {
+    this.hole = isHole;
+    this.row = row;
+    this.col = col;
+  }
+
+  public ThreeTrioCell(int row, int col) {
+    this.card = null;
+    this.hole = false;
+    this.row = row;
+    this.col = col;
+  }
+
+  public ThreeTrioCell(Boolean isHole, int row, int col, Card card) {
+    this.card = card;
+    this.hole = isHole;
+    this.row = row;
+    this.col = col;
+  }
 
   @Override
   public boolean isHole() {
@@ -18,16 +40,6 @@ public class ThreeTrioCell implements Cell {
   @Override
   public boolean isEmpty() {
     return (this.card == null);
-  }
-
-  @Override
-  public void changeCardPlayer(Player player) {
-
-    if(this.isEmpty()) {
-      throw new IllegalArgumentException("This cell is empty");
-    }
-
-    this.card.changePlayer(player);
   }
 
 
@@ -43,7 +55,33 @@ public class ThreeTrioCell implements Cell {
 
   @Override
   public Card getCard() {
+
+    if(this.card == null) {
+      throw new IllegalArgumentException("This cell is empty");
+    }
+
     return this.card;
+  }
+
+  @Override
+  public Player whoOwns() {
+
+    return this.card.getPlayer();
+  }
+
+  @Override
+  public int getRow() {
+    return this.row;
+  }
+
+  @Override
+  public int getCol() {
+    return this.col;
+  }
+
+  @Override
+  public void setPlayer(Player player) {
+    this.card.setPlayer(player);
   }
 
 }

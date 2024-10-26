@@ -9,6 +9,17 @@ public class ThreeTriosPlayer implements Player {
   Color playerColor;
   ArrayList<Card> cards;
 
+  public ThreeTriosPlayer(Color playerColor, ArrayList<Card> cards) {
+    this.playerColor = playerColor;
+    this.cards = cards;
+
+    for(Card c : cards) {
+
+      c.setPlayer(this);
+
+    }
+  }
+
   @Override
   public Color getColor() {
     return this.playerColor;
@@ -20,13 +31,9 @@ public class ThreeTriosPlayer implements Player {
   }
 
   @Override
-  public boolean cardExists(int cardIndex) {
-
-    if(this.cards.size() - 1 < cardIndex) {
-      return false;
-
-    } else {
-      return true;
-    }
+  public Card playCard(int cardIndex) {
+    return this.cards.remove(cardIndex);
   }
+
+
 }

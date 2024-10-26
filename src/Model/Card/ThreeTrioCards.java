@@ -42,6 +42,12 @@ public class ThreeTrioCards implements Card {
     this.player = player;
   }
 
+  public ThreeTrioCards(HashMap<Direction, Integer> given) {
+
+    this.AttackVals = given;
+    this.player = null;
+  }
+
   /**
    * // Everything from the interface.
    * But also emphasizing that: This method relies on the AttackVals field.
@@ -64,13 +70,7 @@ public class ThreeTrioCards implements Card {
   }
 
   @Override
-  public void changePlayer(Player player) {
-
-    if(this.player == player) {
-      throw new IllegalArgumentException("Given player already owns the card");
-    }
-
-
+  public void setPlayer(Player player) {
 
     this.player = player;
   }

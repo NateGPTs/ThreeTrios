@@ -5,6 +5,6 @@ import java.util.ArrayList;
 
 public interface GridCommands {
 
-  void executePlay(int row, int col);
+  void executePlay(int row, int col, int handIndex);
 
 }

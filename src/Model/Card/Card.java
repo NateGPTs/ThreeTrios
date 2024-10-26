@@ -29,6 +29,6 @@ public interface Card {
   Player getPlayer();
 
 
-  void changePlayer(Player player);
+  void setPlayer(Player player);
 
 }
