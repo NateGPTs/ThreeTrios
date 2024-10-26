@@ -11,9 +11,9 @@ import java.util.function.BiFunction;
 
 public class StandardPlay implements GridCommands {
 
-  Cell[][] grid;
-  Player player;
-  HashMap<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
+  private final Cell[][] grid;
+  private final Player player;
+  private final HashMap<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
 
 
   public StandardPlay(Cell[][] grid, Player player) {

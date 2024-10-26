@@ -3,6 +3,7 @@ package Model;
 import Model.CommandPlayToGrid.StandardPlay;
 import Model.Cell.Cell;
 import Model.ModelPlayer.Player;
+import java.util.HashMap;
 
 public class StandardThreeTrios implements ThreeTriosModel {
 
@@ -12,12 +13,24 @@ public class StandardThreeTrios implements ThreeTriosModel {
 
   }
 
+  public enum playerKey {
+
+    ONE, TWO
+
+  }
+
   private state gameState;
   private final Cell[][] grid;
   private Player whoseTurn;
+  private HashMap<playerKey, Player> players;
 
-
+  //Invariant: Grid cannot be null.
   public StandardThreeTrios(Cell[][] grid) {
+
+    if(grid == null) {
+      throw new IllegalArgumentException("Grid cannot be null.");
+    }
+
     this.gameState = state.notStarted;
     this.grid = grid;
   }
@@ -46,6 +59,13 @@ public class StandardThreeTrios implements ThreeTriosModel {
 
   @Override
   public boolean isGameOver() {
+
+    for(Cell[] row : this.grid) {
+
+
+
+    }
+
     return false;
   }
 
@@ -55,7 +75,6 @@ public class StandardThreeTrios implements ThreeTriosModel {
     if(this.gameState != state.notStarted) {
       throw new IllegalStateException("Game has already started or is over");
     }
-
 
 
   }
@@ -68,11 +87,6 @@ public class StandardThreeTrios implements ThreeTriosModel {
     }
 
     return null;
-  }
-
-  private void enforceEndGame() {
-
-
   }
 
 
