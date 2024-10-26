@@ -7,6 +7,8 @@ public interface ThreeTriosModel {
 
   void playToGrid(int row, int col, int handIndex);
 
+  void playToGridCPU();
+
   Cell[][] getGrid();
 
   Player currentPlayer();
@@ -16,6 +18,8 @@ public interface ThreeTriosModel {
   void startGame();
 
   Player getWinner();
+
+
 
 
 }

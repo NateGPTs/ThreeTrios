@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 public class ThreeTriosPlayer implements Player {
 
-  Color playerColor;
-  ArrayList<Card> cards;
+  private Color playerColor;
+  private ArrayList<Card> cards;
+  private Boolean isCPU;
 
   public ThreeTriosPlayer(Color playerColor, ArrayList<Card> cards) {
     this.playerColor = playerColor;
     this.cards = cards;
+    this.isCPU = false;
 
     for(Card c : cards) {
 
@@ -33,6 +35,11 @@ public class ThreeTriosPlayer implements Player {
   @Override
   public Card playCard(int cardIndex) {
     return this.cards.remove(cardIndex);
+  }
+
+  @Override
+  public Boolean isCPU() {
+    return this.isCPU;
   }
 
 

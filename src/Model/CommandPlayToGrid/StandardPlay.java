@@ -6,20 +6,19 @@ import Model.Cell.Cell;
 import Model.ModelPlayer.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.function.Function;
 import java.util.function.BiFunction;
 
 public class StandardPlay implements GridCommands {
 
   private final Cell[][] grid;
-  private final Player player;
+  private Player player;
   private final HashMap<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
 
 
-  public StandardPlay(Cell[][] grid, Player player) {
+  public StandardPlay(Cell[][] grid) {
 
     this.grid = grid;
-    this.player = player;
+    this.player = null;
     DirectionalValues = new HashMap<>();
     DirectionalValues.put(Direction.EAST, (r, c) -> this.grid[r][c + 1]);
     DirectionalValues.put(Direction.WEST, (r, c) -> this.grid[r][c - 1]);
@@ -122,7 +121,13 @@ public class StandardPlay implements GridCommands {
    * @param handIndex the handIndex, for picking which card in the hand to play with.
    */
   @Override
-  public void executePlay(int row, int col, int handIndex) {
+  public void executePlay(int row, int col, int handIndex, Player given) {
+
+    if(given == null) {
+      throw new IllegalArgumentException("Given player must not be null");
+    } else {
+      this.player = given;
+    }
 
     if(!isInBounds(row, col)) {
       throw new IllegalArgumentException("Row/Column out of bounds");
@@ -143,6 +148,16 @@ public class StandardPlay implements GridCommands {
 
   }
 
+  /**
+   * Represents a CPU playing a move.
+   */
+  @Override
+  public void executeCPUPlay() {
+
+    //
+
+
+  }
 
 
 }

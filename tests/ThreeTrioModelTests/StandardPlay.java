@@ -73,9 +73,9 @@ public class StandardPlay {
     grid[1][1].addCard(card1);
     grid[1][2].addCard(card0);
 
-    testPlay = new Model.CommandPlayToGrid.StandardPlay(grid, player1);
+    testPlay = new Model.CommandPlayToGrid.StandardPlay(grid);
 
-    testPlay.executePlay(1, 0, 0);
+    testPlay.executePlay(1, 0, 0, player1);
 
 
     assertEquals(grid[1][0].getCard(), card2);
@@ -110,8 +110,8 @@ public class StandardPlay {
     grid[0][1].addCard(card1);
     grid[1][2].addCard(card2);
     grid[2][1].addCard(card3);
-    testPlay = new Model.CommandPlayToGrid.StandardPlay(grid, player1);
-    testPlay.executePlay(1, 1, 0);
+    testPlay = new Model.CommandPlayToGrid.StandardPlay(grid);
+    testPlay.executePlay(1, 1, 0, player1);
 
     assertEquals(grid[1][0].getCard(), card0);
     assertEquals(grid[0][1].getCard(), card1);
@@ -150,8 +150,8 @@ public class StandardPlay {
     grid[0][1].addCard(card1);
     grid[1][2].addCard(card2);
     grid[2][1].addCard(card3);
-    testPlay = new Model.CommandPlayToGrid.StandardPlay(grid, player1);
-    testPlay.executePlay(1, 1, 0);
+    testPlay = new Model.CommandPlayToGrid.StandardPlay(grid);
+    testPlay.executePlay(1, 1, 0, player1);
 
     assertEquals(grid[1][0].getCard(), card0);
     assertEquals(grid[0][1].getCard(), card1);

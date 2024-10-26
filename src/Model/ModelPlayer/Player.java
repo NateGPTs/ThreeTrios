@@ -18,4 +18,7 @@ public interface Player {
    * @return Card
    */
   public Card playCard(int cardIndex);
+
+
+  public Boolean isCPU();
 }
