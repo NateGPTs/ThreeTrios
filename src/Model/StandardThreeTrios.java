@@ -46,22 +46,13 @@ public class StandardThreeTrios implements ThreeTriosModel {
   /**
    * Constructs a game model using the given grid.
    *
-   * @param grid a non-null game grid
-   * @throws IllegalArgumentException if the grid is null
    */
-  public StandardThreeTrios(Cell[][] grid, ArrayList<Card> deck) {
+  public StandardThreeTrios(Cell[][] grid) {
 
-    if (grid == null) {
-      throw new IllegalArgumentException("Grid cannot be null.");
-    }
 
-    if(deck == null) {
-
-    }
-
-    this.grid = grid;
     this.players = new HashMap<>();
     this.gameState = GameState.NOT_STARTED;
+    this.grid = grid;
     this.gridCommands = new StandardPlay(grid);
 
   }
