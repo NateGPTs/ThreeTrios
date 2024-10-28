@@ -1,12 +1,15 @@
 package Model;
 
+import Model.Card.Card;
 import Model.CommandPlayToGrid.GridCommands;
 import Model.CommandPlayToGrid.StandardPlay;
 import Model.Cell.Cell;
 import Model.ModelPlayer.Player;
 import Model.ModelPlayer.ThreeTriosPlayer;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Represents a standard Three Trios game.
@@ -36,6 +39,9 @@ public class StandardThreeTrios implements ThreeTriosModel {
   private final HashMap<PlayerKey, Player> players;
   private final GridCommands gridCommands;
 
+  private void ensureGridCardCellsAreOdd(Cell[][] grid) {
+
+  }
 
   /**
    * Constructs a game model using the given grid.
@@ -43,30 +49,51 @@ public class StandardThreeTrios implements ThreeTriosModel {
    * @param grid a non-null game grid
    * @throws IllegalArgumentException if the grid is null
    */
-  public StandardThreeTrios(Cell[][] grid, Player playerOne, Player playerTwo) {
+  public StandardThreeTrios(Cell[][] grid, ArrayList<Card> deck) {
 
     if (grid == null) {
       throw new IllegalArgumentException("Grid cannot be null.");
     }
 
+    if(deck == null) {
+
+    }
+
     this.grid = grid;
     this.players = new HashMap<>();
-    this.players.put(PlayerKey.ONE, playerOne);
-    this.players.put(PlayerKey.TWO, playerTwo);
     this.gameState = GameState.NOT_STARTED;
-    this.whoseTurn = playerOne;
     this.gridCommands = new StandardPlay(grid);
 
   }
 
-  @Override
-  public void startGame() {
 
+
+
+  @Override
+  public void startGame(ArrayList<Card> deck) {
 
     if (this.gameState != GameState.NOT_STARTED) {
       throw new IllegalStateException("Game has already started or is over");
     }
 
+    int middlePoint = deck.size() / 2;
+    ArrayList<Card> hand1 = new ArrayList<Card>(deck);
+    ArrayList<Card> hand2 = new ArrayList<Card>(deck);
+
+    for (int i = 0; i < middlePoint; i++) {
+      hand1.add(deck.get(i));
+    }
+
+    for (int i = middlePoint; i < deck.size(); i++) {
+      hand2.add(deck.get(i));
+    }
+
+    Player playerOne = new ThreeTriosPlayer(Color.red, hand1);
+    Player playerTwo = new ThreeTriosPlayer(Color.red, hand2);
+
+    this.players.put(PlayerKey.ONE, playerOne);
+    this.players.put(PlayerKey.TWO, playerTwo);
+    this.whoseTurn = playerOne;
     this.gameState = GameState.ONGOING;
   }
 
@@ -82,6 +109,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
     if (!isValidMove(row, col)) {
       throw new IllegalArgumentException("Invalid move.");
     }
+
 
     this.gridCommands.executePlay(row, col, handIndex, this.whoseTurn);
 

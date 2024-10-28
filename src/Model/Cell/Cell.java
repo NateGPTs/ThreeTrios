@@ -10,7 +10,6 @@ public interface Cell {
 
   boolean isEmpty();
 
-
   void addCard(Card given);
 
   Card getCard();

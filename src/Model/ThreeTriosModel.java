@@ -1,7 +1,9 @@
 package Model;
 
+import Model.Card.Card;
 import Model.Cell.Cell;
 import Model.ModelPlayer.Player;
+import java.util.ArrayList;
 
 public interface ThreeTriosModel {
 
@@ -15,11 +17,9 @@ public interface ThreeTriosModel {
 
   boolean isGameOver();
 
-  void startGame();
+  void startGame(ArrayList<Card> deck);
 
   Player getWinner();
-
-
 
 
 }

@@ -39,6 +39,11 @@ public class ThreeTrioCell implements Cell {
 
   @Override
   public boolean isEmpty() {
+
+    if(this.isHole()) {
+      throw new IllegalArgumentException("This card is a hole.");
+    }
+
     return (this.card == null);
   }
 
@@ -56,8 +61,8 @@ public class ThreeTrioCell implements Cell {
   @Override
   public Card getCard() {
 
-    if(this.card == null) {
-      throw new IllegalArgumentException("This cell is empty");
+    if(this.card == null || this.hole) {
+      throw new IllegalArgumentException("This cell is empty. Or is a hole.");
     }
 
     return this.card;
