@@ -92,8 +92,8 @@ public class StandardThreeTrios implements ThreeTriosModel {
     }
 
     int middlePoint = (getNumOfOpenGridCells(this.grid) + 1) / 2;
-    ArrayList<Card> hand1 = new ArrayList<Card>(deck);
-    ArrayList<Card> hand2 = new ArrayList<Card>(deck);
+    ArrayList<Card> hand1 = new ArrayList<Card>();
+    ArrayList<Card> hand2 = new ArrayList<Card>();
 
     for (int i = 0; i < middlePoint; i++) {
       hand1.add(deck.get(i));
@@ -150,7 +150,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
    */
   private boolean isValidMove(int row, int col) {
     return row >= 0 && row < grid.length && col >= 0 && col < grid[0].length &&
-        !grid[row][col].isHole() && grid[row][col].getCard() == null;
+        !grid[row][col].isHole() && grid[row][col].isEmpty();
   }
 
 
@@ -161,15 +161,16 @@ public class StandardThreeTrios implements ThreeTriosModel {
    * @return true if all non-hole cells contains a card
    */
   private boolean isGridFull() {
+
     for (Cell[] row : grid) {
       for (Cell cell : row) {
-        if (!cell.isHole() && cell.getCard() == null) {
+        if (!cell.isHole() && cell.isEmpty()) {
           return false;
         }
       }
     }
-    return true;
 
+    return true;
   }
 
   /**
@@ -197,6 +198,11 @@ public class StandardThreeTrios implements ThreeTriosModel {
 
     for (Cell[] row : this.grid) {
       for (Cell cell : row) {
+
+        if (cell.isHole()) {
+          break;
+        }
+
         if (cell.getCard() != null && cell.isEmpty()) {
           return false;
         }
@@ -214,6 +220,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
     if (this.gameState != GameState.OVER) {
       throw new IllegalStateException("Game is not over");
     }
+
     int playerOneCount = countCards(players.get(PlayerKey.ONE));
     int playerTwoCount = countCards(players.get(PlayerKey.TWO));
 
@@ -226,20 +233,33 @@ public class StandardThreeTrios implements ThreeTriosModel {
     return null;
   }
 
+  @Override
+  public HashMap<PlayerKey, Player> getPlayers() {
+
+    HashMap<PlayerKey, Player> copiedMap = new HashMap<>();
+
+    copiedMap.putAll(this.players);
+
+    return copiedMap;
+  }
+
   /**
    * Counts total number of cards owned by a player in their hand and on the grid
    * @param player player whose cards are to count
    * @return total number of cards owned by the player
    */
   private int countCards(Player player) {
+
     int count = 0;
+
     for (Cell[] row : this.grid) {
       for (Cell cell : row) {
-        if (cell.getCard() != null && cell.getCard().getPlayer().equals(player)) {
+        if (!cell.isHole() && !cell.isEmpty() && cell.getCard().getPlayer().equals(player)) {
           count++;
         }
       }
     }
+
     count += player.getHand().size();
     return count;
   }

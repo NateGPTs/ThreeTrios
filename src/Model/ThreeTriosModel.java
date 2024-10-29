@@ -3,7 +3,9 @@ package Model;
 import Model.Card.Card;
 import Model.Cell.Cell;
 import Model.ModelPlayer.Player;
+import Model.StandardThreeTrios.PlayerKey;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface ThreeTriosModel {
 
@@ -21,5 +23,5 @@ public interface ThreeTriosModel {
 
   Player getWinner();
 
-
+  HashMap<PlayerKey, Player> getPlayers();
 }

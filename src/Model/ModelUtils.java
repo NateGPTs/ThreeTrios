@@ -95,7 +95,7 @@ public class ModelUtils {
 
         String[] card = line.split(" ");
         HashMap<Direction, Integer> attackVal = createAttackVal(card);
-        Card newCard = new ThreeTrioCards(attackVal);
+        Card newCard = new ThreeTrioCards(card[0], attackVal);
         deck.add(newCard);
 
       }

@@ -41,7 +41,7 @@ public class StandardPlay implements GridCommands {
         BiFunction<Integer, Integer, Cell> currDirection = DirectionalValues.get(direction);
         Cell adjacentCell = currDirection.apply(given.getRow(), given.getCol());
 
-        if (!adjacentCell.isEmpty() && !adjacentCell.isHole() && !adjacentCell.whoOwns()
+        if (!adjacentCell.isHole() && !adjacentCell.isEmpty() && !adjacentCell.whoOwns()
             .equals(this.player)) {
           adjacentCells.put(direction, currDirection.apply(given.getRow(), given.getCol()));
         }

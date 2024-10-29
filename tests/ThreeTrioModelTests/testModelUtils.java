@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class testModelUtils {
 
-  ModelUtils modelUtils;
+  private ModelUtils modelUtils;
 
   @Before
   public void setUp() throws Exception {
@@ -38,8 +38,11 @@ public class testModelUtils {
   public void testCreateDeck() {
 
     ArrayList<Card> deck = modelUtils.createDeck("16CardDeck");
+
     assertNotNull(deck);
+
     assertEquals(16, deck.size());
+
   }
 
 

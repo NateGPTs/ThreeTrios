@@ -31,4 +31,7 @@ public interface Card {
 
   void setPlayer(Player player);
 
+
+  String getName();
+
 }
