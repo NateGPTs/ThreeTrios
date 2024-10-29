@@ -28,7 +28,10 @@ public class testModelUtils {
     assertNotNull(board);
     assertEquals(4, board.length);
     assertEquals(4, board[0].length);
-
+    assertNotNull(board[3][3]);
+    assertNotNull(board[2][2]);
+    assertNotNull(board[1][1]);
+    assertNotNull(board[0][0]);
   }
 
   @Test

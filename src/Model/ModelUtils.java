@@ -39,11 +39,11 @@ public class ModelUtils {
 
           if(line[col] == 'C') {
 
-            new ThreeTrioCell(row, col);
+            board[row][col] = new ThreeTrioCell(row, col);
 
           } else {
 
-            new ThreeTrioCell(true, row, col);
+            board[row][col] = new ThreeTrioCell(true, row, col);
 
           }
 

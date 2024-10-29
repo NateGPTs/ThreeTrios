@@ -25,12 +25,6 @@ public class ThreeTrioCell implements Cell {
     this.col = col;
   }
 
-  public ThreeTrioCell(Boolean isHole, int row, int col, Card card) {
-    this.card = card;
-    this.hole = isHole;
-    this.row = row;
-    this.col = col;
-  }
 
   @Override
   public boolean isHole() {

@@ -9,14 +9,12 @@ import Model.ModelPlayer.ThreeTriosPlayer;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Represents a standard Three Trios game.
  * Manages the state, grid, players, and reenforces the
  * rules of the game/game progress.
  */
-
 public class StandardThreeTrios implements ThreeTriosModel {
 
   /**
@@ -39,16 +37,12 @@ public class StandardThreeTrios implements ThreeTriosModel {
   private final HashMap<PlayerKey, Player> players;
   private final GridCommands gridCommands;
 
-  private void ensureGridCardCellsAreOdd(Cell[][] grid) {
-
-  }
 
   /**
    * Constructs a game model using the given grid.
    *
    */
   public StandardThreeTrios(Cell[][] grid) {
-
 
     this.players = new HashMap<>();
     this.gameState = GameState.NOT_STARTED;
@@ -57,7 +51,30 @@ public class StandardThreeTrios implements ThreeTriosModel {
 
   }
 
+  private int getNumOfOpenGridCells(Cell[][] grid) {
 
+    int openGridCells = 0;
+
+    for (Cell[] row : grid) {
+      for (Cell cell : row) {
+        if (!cell.isHole()) {
+          openGridCells++;
+        }
+      }
+    }
+
+    return openGridCells;
+  }
+
+
+  private void ensureNonHoleCellsAreOdd(Cell[][] grid) {
+
+
+    if(((getNumOfOpenGridCells(grid)) % 2) != 1) {
+      throw new IllegalArgumentException("Number of non hole grid cells must be odd");
+    }
+
+  }
 
 
   @Override
@@ -67,7 +84,14 @@ public class StandardThreeTrios implements ThreeTriosModel {
       throw new IllegalStateException("Game has already started or is over");
     }
 
-    int middlePoint = deck.size() / 2;
+    ensureNonHoleCellsAreOdd(this.grid);
+
+    if (deck.size() < getNumOfOpenGridCells(this.grid) + 1) {
+      throw new IllegalStateException("Number of cards in a "
+          + "deck must be at least one greater than the grid");
+    }
+
+    int middlePoint = (getNumOfOpenGridCells(this.grid) + 1) / 2;
     ArrayList<Card> hand1 = new ArrayList<Card>(deck);
     ArrayList<Card> hand2 = new ArrayList<Card>(deck);
 
@@ -75,12 +99,12 @@ public class StandardThreeTrios implements ThreeTriosModel {
       hand1.add(deck.get(i));
     }
 
-    for (int i = middlePoint; i < deck.size(); i++) {
+    for (int i = middlePoint; i < middlePoint * 2; i++) {
       hand2.add(deck.get(i));
     }
 
     Player playerOne = new ThreeTriosPlayer(Color.red, hand1);
-    Player playerTwo = new ThreeTriosPlayer(Color.red, hand2);
+    Player playerTwo = new ThreeTriosPlayer(Color.blue, hand2);
 
     this.players.put(PlayerKey.ONE, playerOne);
     this.players.put(PlayerKey.TWO, playerTwo);
@@ -100,7 +124,6 @@ public class StandardThreeTrios implements ThreeTriosModel {
     if (!isValidMove(row, col)) {
       throw new IllegalArgumentException("Invalid move.");
     }
-
 
     this.gridCommands.executePlay(row, col, handIndex, this.whoseTurn);
 
@@ -161,8 +184,6 @@ public class StandardThreeTrios implements ThreeTriosModel {
   @Override
   public Cell[][] getGrid() {
 
-
-
     return this.grid;
   }
 
@@ -189,6 +210,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
 
   @Override
   public Player getWinner() {
+
     if (this.gameState != GameState.OVER) {
       throw new IllegalStateException("Game is not over");
     }
@@ -200,6 +222,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
     } else if (playerTwoCount > playerOneCount) {
       return players.get(PlayerKey.TWO);
     }
+
     return null;
   }
 
