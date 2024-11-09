@@ -1,20 +1,30 @@
-package Model.CommandPlayToGrid;
+package model.grid;
 
-import Model.Card.Card;
-import Model.Card.Direction;
-import Model.Cell.Cell;
-import Model.ModelPlayer.Player;
+import model.card.Card;
+import model.card.Direction;
+import model.cell.Cell;
+import model.player.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.BiFunction;
 
+/**
+ * Represents a standard play system for a Three Trios grid-based game. Each cell on the grid can
+ * take a card with directional attack values. You can execute player moves, handle card clashes
+ * with neighboring cells, and do CPU-controlled plays.
+ */
 public class StandardPlay implements GridCommands {
 
   private final Cell[][] grid;
-  private Player player;
   private final HashMap<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
+  private Player player;
 
-
+  /**
+   * Constructs a StandardPlay instance with a specific grid layout. Initializes based on North,
+   * South, East, and West directions.
+   *
+   * @param grid a 2D array where each cell can contain a card or a hole
+   */
   public StandardPlay(Cell[][] grid) {
 
     this.grid = grid;
@@ -36,13 +46,13 @@ public class StandardPlay implements GridCommands {
 
     HashMap<Direction, Cell> adjacentCells = new HashMap<Direction, Cell>();
 
-    for(Direction direction : Direction.values()) {
+    for (Direction direction : Direction.values()) {
       try {
         BiFunction<Integer, Integer, Cell> currDirection = DirectionalValues.get(direction);
         Cell adjacentCell = currDirection.apply(given.getRow(), given.getCol());
 
-        if (!adjacentCell.isHole() && !adjacentCell.isEmpty() && !adjacentCell.whoOwns()
-            .equals(this.player)) {
+        if (!adjacentCell.isHole() && !adjacentCell.isEmpty()
+            && !adjacentCell.checkOwnership(this.player)) {
           adjacentCells.put(direction, currDirection.apply(given.getRow(), given.getCol()));
         }
       } catch (ArrayIndexOutOfBoundsException e) {
@@ -60,28 +70,21 @@ public class StandardPlay implements GridCommands {
    *
    * @param row the row.
    * @param col the column.
-   * @return yes if within bounds no otherwise.
+   * @return True if within bounds false otherwise.
    */
   private boolean isInBounds(int row, int col) {
 
-    // Check if row is within the array's number of rows
     if (row < 0 || row >= this.grid.length) {
       return false; // Out of bounds
     }
 
-    // Check if column is within the number of columns for that row
-    if (col < 0 || col >= this.grid[row].length) {
-      return false; // Out of bounds
-    }
-
-    return true;
+    return col >= 0 && col < this.grid[row].length; // Out of bounds
   }
 
 
   /**
-   * For a given cell, check neighbouring cells with cards, and if the neighbouring cells
-   * have an opposite direction attack value that is less than the given one,
-   * that card cell flips owners.
+   * For a given cell, check neighbouring cells with cards, and if the neighbouring cells have an
+   * opposite direction attack value that is less than the given one, that card cell flips owners.
    *
    * @param given Cell.
    */
@@ -92,19 +95,19 @@ public class StandardPlay implements GridCommands {
 
     Card theCard = given.getCard();
 
-    for(Direction direction : adjacentCells.keySet()) {
+    for (Direction direction : adjacentCells.keySet()) {
 
       Cell adjacentCell = adjacentCells.get(direction);
       Card adjacentCard = adjacentCell.getCard();
 
-      if(theCard.getAttackVal(direction) > adjacentCard.getAttackVal(direction.getOpposite())) {
+      if (theCard.getAttackVal(direction) > adjacentCard.getAttackVal(direction.getOpposite())) {
         adjacentCard.setPlayer(this.player);
         convertedCells.add(adjacentCell);
       }
 
     }
 
-    for(Cell cell : convertedCells) {
+    for (Cell cell : convertedCells) {
       cardClash(cell);
 
     }
@@ -112,32 +115,39 @@ public class StandardPlay implements GridCommands {
   }
 
 
+  private boolean inBoundsForHand(int handIndex) {
+
+    return handIndex >= 0 && handIndex < this.grid.length;
+
+  }
+
   /**
-   * Play a card to an empty Cell in the grid. And have the card clash with
-   * Neighbouring cards of a different owner.
+   * Play a card to an empty Cell in the grid. And have the card clash with Neighbouring cards of a
+   * different owner.
    *
-   * @param row the row to play to.
-   * @param col column to play to.
+   * @param row       the row to play to.
+   * @param col       column to play to.
    * @param handIndex the handIndex, for picking which card in the hand to play with.
+   * @param given     the player given that is executing a play.
    */
   @Override
   public void executePlay(int row, int col, int handIndex, Player given) {
 
-    if(given == null) {
+    if (given == null) {
       throw new IllegalArgumentException("Given player must not be null");
     } else {
       this.player = given;
     }
 
-    if(!isInBounds(row, col)) {
+    if (!isInBounds(row, col)) {
       throw new IllegalArgumentException("Row/Column out of bounds");
     }
 
-    if(handIndex > player.getHand().size() - 1) {
+    if (!inBoundsForHand(handIndex)) {
       throw new IllegalArgumentException("Hand index out of bounds");
     }
 
-    if(this.grid[row][col].isEmpty()) {
+    if (this.grid[row][col].isEmpty()) {
 
       this.grid[row][col].addCard(this.player.playCard(handIndex));
       cardClash(this.grid[row][col]);
@@ -148,6 +158,8 @@ public class StandardPlay implements GridCommands {
 
   }
 
+
+
   /**
    * Represents a CPU playing a move.
    */
@@ -155,7 +167,6 @@ public class StandardPlay implements GridCommands {
   public void executeCPUPlay() {
 
     // Implementation not required for this HW.
-
 
   }
 

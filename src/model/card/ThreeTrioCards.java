@@ -1,15 +1,12 @@
-package Model.Card;
+package model.card;
 
-import Model.Card.Card;
-import Model.Card.CardFactory.ThreeTrioAttackVal;
-import Model.Card.Direction;
-import Model.ModelPlayer.Player;
+import model.player.Player;
 import java.util.HashMap;
 
 
 /**
- *  Represents a card class specifically for the standard play of the ThreeTriosModel.
- *  Standard here refers to the model and its corresponding rules in the first assignment.
+ * Represents a card class specifically for the standard play of the ThreeTriosModel. Standard here
+ * refers to the model and its corresponding rules in the first assignment.
  */
 public class ThreeTrioCards implements Card {
 
@@ -18,23 +15,21 @@ public class ThreeTrioCards implements Card {
    * here.
    */
   private final HashMap<Direction, Integer> attackVals;
-
+  /**
+   * Name of the card, used for the view.
+   */
+  private final String name;
   /**
    * Represents the player who owns this specific card.
    */
   private Player player;
 
   /**
-   * Name of the card, used for the view.
-   */
-  private final String name;
-
-  /**
    * A card constructor. This card constructor allows you to add your custom attackVals for
    * testing.
    *
-   * @param attackVals
-   * @param player
+   * @param attackVals representing the cards attack in a specific direction.
+   * @param player     represents the player who owns the card.
    */
   public ThreeTrioCards(String name, HashMap<Direction, Integer> attackVals, Player player) {
 
@@ -53,33 +48,20 @@ public class ThreeTrioCards implements Card {
 
 
   /**
-   * Constructs card with a name and default attack values.
-   *
-   * @param name   the name of the card.
-   * @param player the player who owns this card.
-   */
-  public ThreeTrioCards(String name, Player player) {
-    if (name == null || name.isEmpty()) {
-      throw new IllegalArgumentException("Name cannot be null or empty.");
-    }
-    this.name = name;
-    this.attackVals = new ThreeTrioAttackVal().create();
-    this.player = player;
-  }
-
-  /**
    * Constructs card with a name and attack values, with no owner.
    *
    * @param name  the name of the card
    * @param given the map of attack values
    */
   public ThreeTrioCards(String name, HashMap<Direction, Integer> given) {
+
     if (name == null || name.isEmpty()) {
       throw new IllegalArgumentException("Name cannot be null or empty.");
     }
     if (given == null || given.isEmpty()) {
       throw new IllegalArgumentException("Attack values cannot be null or empty.");
     }
+
     this.name = name;
     this.attackVals = given;
     this.player = null;
@@ -91,7 +73,7 @@ public class ThreeTrioCards implements Card {
    * direction enum key has a corresponding integer value representing the attack value for that
    * direction.
    *
-   * @param direction
+   * @param direction of the AttackVal.
    * @return an integer representing the attack value for that particular direction.
    */
   @Override
@@ -110,9 +92,10 @@ public class ThreeTrioCards implements Card {
     this.player = player;
   }
 
-
+  @Override
   public String getName() {
     return this.name;
   }
+
 
 }

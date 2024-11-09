@@ -1,48 +1,37 @@
-package Model;
+package model;
 
-import Model.Card.Card;
-import Model.CommandPlayToGrid.GridCommands;
-import Model.CommandPlayToGrid.StandardPlay;
-import Model.Cell.Cell;
-import Model.ModelPlayer.Player;
-import Model.ModelPlayer.ThreeTriosPlayer;
+import model.Strategy.Coordinate;
+import model.card.Card;
+import model.cell.Cell;
+import model.cell.ThreeTrioCell;
+import model.grid.GridCommands;
+import model.grid.StandardPlay;
+import model.player.Player;
+import model.player.ThreeTriosPlayer;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Represents a standard Three Trios game.
- * Manages the state, grid, players, and reenforces the
+ * Represents a standard Three Trios game. Manages the state, grid, players, and reenforces the
  * rules of the game/game progress.
  */
 public class StandardThreeTrios implements ThreeTriosModel {
 
-  /**
-   * Possible states of the game.
-   */
-  public enum GameState {
-    NOT_STARTED, OVER, ONGOING
-  }
-
-  /**
-   * Keys to identify players.
-   */
-  public enum PlayerKey {
-    ONE, TWO
-  }
-
-  private GameState gameState;
   private final Cell[][] grid;
-  private Player whoseTurn;
   private final HashMap<PlayerKey, Player> players;
   private final GridCommands gridCommands;
-
+  private GameState gameState;
+  private Player whoseTurn;
 
   /**
    * Constructs a game model using the given grid.
-   *
    */
   public StandardThreeTrios(Cell[][] grid) {
+
+    if (grid == null) {
+      throw new IllegalArgumentException("Grid is null");
+    }
 
     this.players = new HashMap<>();
     this.gameState = GameState.NOT_STARTED;
@@ -66,16 +55,13 @@ public class StandardThreeTrios implements ThreeTriosModel {
     return openGridCells;
   }
 
-
   private void ensureNonHoleCellsAreOdd(Cell[][] grid) {
 
-
-    if(((getNumOfOpenGridCells(grid)) % 2) != 1) {
+    if (((getNumOfOpenGridCells(grid)) % 2) != 1) {
       throw new IllegalArgumentException("Number of non hole grid cells must be odd");
     }
 
   }
-
 
   @Override
   public void startGame(ArrayList<Card> deck) {
@@ -111,8 +97,6 @@ public class StandardThreeTrios implements ThreeTriosModel {
     this.whoseTurn = playerOne;
     this.gameState = GameState.ONGOING;
   }
-
-
 
   @Override
   public void playToGrid(int row, int col, int handIndex) {
@@ -153,10 +137,8 @@ public class StandardThreeTrios implements ThreeTriosModel {
         !grid[row][col].isHole() && grid[row][col].isEmpty();
   }
 
-
   /**
-   * Checks if the grid is full of occupied cards. Considered full if
-   * each cell contains a card.
+   * Checks if the grid is full of occupied cards. Considered full if each cell contains a card.
    *
    * @return true if all non-hole cells contains a card
    */
@@ -174,8 +156,8 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   /**
-   * Changes the turn between player one and two.
-   * The method switches to the other player after a turn is made.
+   * Changes the turn between player one and two. The method switches to the other player after a
+   * turn is made.
    */
   private void switchPlayerTurn() {
     this.whoseTurn = (this.whoseTurn == players.get(PlayerKey.ONE)) ?
@@ -185,12 +167,45 @@ public class StandardThreeTrios implements ThreeTriosModel {
   @Override
   public Cell[][] getGrid() {
 
-    return this.grid;
+    Cell[][] copiedArray = new ThreeTrioCell[this.grid.length][this.grid[0].length];
+
+    for (int row = 0; row < this.grid.length; row++) {
+      for (int col = 0; col < this.grid[row].length; col++) {
+        copiedArray[row][col] = new ThreeTrioCell(this.grid[row][col]);
+      }
+    }
+
+    return copiedArray;
   }
 
   @Override
   public Player currentPlayer() {
     return this.whoseTurn;
+  }
+
+  @Override
+  public int gridSize() {
+    return grid.length * (grid[0].length);
+  }
+
+  @Override
+  public Cell getCell(Coordinate coord) {
+    return grid[coord.getRow()][coord.getCol()];
+  }
+
+  @Override
+  public Player whoOwns(int row, int col) {
+    return grid[row][col].getOwner();
+  }
+
+  @Override
+  public int flipCount(Card given, Coordinate coord) {
+    return 0;
+  }
+
+  @Override
+  public int playerScore(Player given) {
+    return countCards(given);
   }
 
   @Override
@@ -212,6 +227,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
     this.gameState = GameState.OVER;
     return true;
   }
+
 
 
   @Override
@@ -244,7 +260,8 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   /**
-   * Counts total number of cards owned by a player in their hand and on the grid
+   * Counts total number of cards owned by a player in their hand and on the grid.
+   *
    * @param player player whose cards are to count
    * @return total number of cards owned by the player
    */
@@ -262,6 +279,20 @@ public class StandardThreeTrios implements ThreeTriosModel {
 
     count += player.getHand().size();
     return count;
+  }
+
+  /**
+   * Possible states of the game.
+   */
+  public enum GameState {
+    NOT_STARTED, OVER, ONGOING
+  }
+
+  /**
+   * Keys to identify players.
+   */
+  public enum PlayerKey {
+    ONE, TWO
   }
 
 

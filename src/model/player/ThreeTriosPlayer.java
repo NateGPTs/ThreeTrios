@@ -1,26 +1,38 @@
-package Model.ModelPlayer;
+package model.player;
 
-import Model.Card.Card;
+import model.card.Card;
 import java.awt.Color;
 import java.util.ArrayList;
 
+/**
+ * Represents a player in the Three Trios game with a specific color, hand of cards, and whether
+ * they are CPU-controlled.
+ */
 public class ThreeTriosPlayer implements Player {
 
-  private Color playerColor;
-  private ArrayList<Card> cards;
-  private Boolean isCPU;
+  private final Color playerColor;
+  private final ArrayList<Card> cards;
+  private final Boolean isCPU;
 
+
+  /**
+   * Creates a ThreeTriosPlayer with a specified color and hand of cards.
+   *
+   * @param playerColor the color representing the player
+   * @param cards       the initial hand of cards
+   */
   public ThreeTriosPlayer(Color playerColor, ArrayList<Card> cards) {
     this.playerColor = playerColor;
     this.cards = cards;
     this.isCPU = false;
 
-    for(Card c : cards) {
+    for (Card c : cards) {
 
       c.setPlayer(this);
 
     }
   }
+
 
   @Override
   public Color getColor() {
