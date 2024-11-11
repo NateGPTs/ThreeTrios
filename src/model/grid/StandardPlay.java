@@ -1,8 +1,14 @@
 package model.grid;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Predicate;
+import model.Strategy.Coordinate;
 import model.card.Card;
 import model.card.Direction;
+import model.card.ThreeTrioCards;
 import model.cell.Cell;
+import model.cell.ThreeTrioCell;
 import model.player.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +48,8 @@ public class StandardPlay implements GridCommands {
    * @param given cell.
    * @return HashMap with direction as a key and Cell as the value.
    */
-  private HashMap<Direction, Cell> getValidNeighbour(Cell given) {
+  @Override
+  public HashMap<Direction, Cell> getAdjacentCells(Cell given, Predicate<Cell> cellPredicate) {
 
     HashMap<Direction, Cell> adjacentCells = new HashMap<Direction, Cell>();
 
@@ -51,9 +58,8 @@ public class StandardPlay implements GridCommands {
         BiFunction<Integer, Integer, Cell> currDirection = DirectionalValues.get(direction);
         Cell adjacentCell = currDirection.apply(given.getRow(), given.getCol());
 
-        if (!adjacentCell.isHole() && !adjacentCell.isEmpty()
-            && !adjacentCell.checkOwnership(this.player)) {
-          adjacentCells.put(direction, currDirection.apply(given.getRow(), given.getCol()));
+        if (cellPredicate.test(adjacentCell)) {
+          adjacentCells.put(direction, adjacentCell);
         }
       } catch (ArrayIndexOutOfBoundsException e) {
 
@@ -63,6 +69,14 @@ public class StandardPlay implements GridCommands {
     }
 
     return adjacentCells;
+  }
+
+  public HashMap<Direction, Cell> getAdjacentOccupiedCells(Cell given) {
+    return getAdjacentCells(given,
+        cell -> !cell.isHole() &&
+            !cell.isEmpty() &&
+            !cell.checkOwnership(this.player)
+    );
   }
 
   /**
@@ -90,8 +104,71 @@ public class StandardPlay implements GridCommands {
    */
   private void cardClash(Cell given) {
 
-    HashMap<Direction, Cell> adjacentCells = getValidNeighbour(given);
     ArrayList<Cell> convertedCells = new ArrayList<>();
+
+    clashAdjacentCards(given, convertedCells);
+
+    for (Cell cell : convertedCells) {
+      cardClash(cell);
+
+    }
+  }
+
+  /**
+   * Simulates a card play to count how many cells would flip, without actually making the moves.
+   *
+   * @param coords representing coordinates.
+   * @param card Card to simulate playing
+   * @param player Player making the move
+   * @return Number of cells that would flip
+   */
+  public int countPotentialFlips(Coordinate coords, Card card, Player player) {
+
+    if (!isInBounds(coords.getRow(), coords.getCol()) || card == null || player == null) {
+      return 0;
+    }
+
+    if (!grid[coords.getRow()][coords.getCol()].isEmpty()) {
+      return 0;
+    }
+
+    Cell tempCell = new ThreeTrioCell(coords.getRow(), coords.getCol());
+    tempCell.addCard(card);
+    card.setPlayer(player);
+    Set<Cell> cellsToFlip = new HashSet<>();
+    simulateClash(tempCell, cellsToFlip, player);
+
+    return cellsToFlip.size();
+  }
+
+  /**
+   * Recursive simulation of card clash effects.
+   */
+  private void simulateClash(Cell given, Set<Cell> flippedCells, Player simulatedPlayer) {
+    HashMap<Direction, Cell> adjacentCells = getAdjacentOccupiedCells(given);
+    Card theCard = given.getCard();
+
+    for (Direction direction : adjacentCells.keySet()) {
+      Cell adjacentCell = adjacentCells.get(direction);
+      Card adjacentCard = adjacentCell.getCard();
+
+      if (theCard.getAttackVal(direction) > adjacentCard.getAttackVal(direction.getOpposite())) {
+        if (flippedCells.add(adjacentCell)) {
+          Cell tempCell = new ThreeTrioCell(adjacentCell.getRow(), adjacentCell.getCol());
+          tempCell.addCard(new ThreeTrioCards(adjacentCard));
+          tempCell.getCard().setPlayer(simulatedPlayer);
+          simulateClash(tempCell, flippedCells, simulatedPlayer);
+        }
+      }
+    }
+  }
+
+
+
+
+  private void clashAdjacentCards(Cell given, ArrayList<Cell> convertedCells) {
+
+    HashMap<Direction, Cell> adjacentCells = getAdjacentOccupiedCells(given);
 
     Card theCard = given.getCard();
 
@@ -101,17 +178,12 @@ public class StandardPlay implements GridCommands {
       Card adjacentCard = adjacentCell.getCard();
 
       if (theCard.getAttackVal(direction) > adjacentCard.getAttackVal(direction.getOpposite())) {
+
         adjacentCard.setPlayer(this.player);
         convertedCells.add(adjacentCell);
+
       }
-
     }
-
-    for (Cell cell : convertedCells) {
-      cardClash(cell);
-
-    }
-
   }
 
 
@@ -169,6 +241,10 @@ public class StandardPlay implements GridCommands {
     // Implementation not required for this HW.
 
   }
+
+
+
+
 
 
 }

@@ -1,5 +1,11 @@
 package model.grid;
 
+import java.util.HashMap;
+import java.util.function.Predicate;
+import model.Strategy.Coordinate;
+import model.card.Card;
+import model.card.Direction;
+import model.cell.Cell;
 import model.player.Player;
 
 /**
@@ -26,5 +32,10 @@ public interface GridCommands {
    * based on CPU's strategy.
    */
   void executeCPUPlay();
+
+
+  int countPotentialFlips(Coordinate coords, Card card, Player player);
+
+  HashMap<Direction, Cell> getAdjacentCells(Cell cell, Predicate<Cell> cellPredicate);
 
 }

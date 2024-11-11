@@ -1,7 +1,11 @@
 package model;
 
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import model.Strategy.Coordinate;
 import model.card.Card;
+import model.card.Direction;
 import model.cell.Cell;
 import model.cell.ThreeTrioCell;
 import model.grid.GridCommands;
@@ -19,6 +23,7 @@ import java.util.HashMap;
 public class StandardThreeTrios implements ThreeTriosModel {
 
   private final Cell[][] grid;
+  private final HashMap<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
   private final HashMap<PlayerKey, Player> players;
   private final GridCommands gridCommands;
   private GameState gameState;
@@ -37,7 +42,11 @@ public class StandardThreeTrios implements ThreeTriosModel {
     this.gameState = GameState.NOT_STARTED;
     this.grid = grid;
     this.gridCommands = new StandardPlay(grid);
-
+    DirectionalValues = new HashMap<>();
+    DirectionalValues.put(Direction.EAST, (r, c) -> this.grid[r][c + 1]);
+    DirectionalValues.put(Direction.WEST, (r, c) -> this.grid[r][c - 1]);
+    DirectionalValues.put(Direction.NORTH, (r, c) -> this.grid[r - 1][c]);
+    DirectionalValues.put(Direction.SOUTH, (r, c) -> this.grid[r + 1][c]);
   }
 
   private int getNumOfOpenGridCells(Cell[][] grid) {
@@ -199,8 +208,8 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   @Override
-  public int flipCount(Card given, Coordinate coord) {
-    return 0;
+  public int flipCount(Card given, Coordinate coord, Player player) {
+    return this.gridCommands.countPotentialFlips(coord, given, player);
   }
 
   @Override
@@ -228,6 +237,19 @@ public class StandardThreeTrios implements ThreeTriosModel {
     return true;
   }
 
+  @Override
+  public HashMap<Direction, Cell> getAdjacentCells(Coordinate coord, Predicate<Cell> cellPredicate) {
+    Cell getCell = grid[coord.getRow()][coord.getCol()];
+    HashMap<Direction, Cell> adjacentCells = this.gridCommands.getAdjacentCells(getCell, cellPredicate);
+    HashMap<Direction, Cell> deepCopiedCells = new HashMap<>();
+    ModelUtils util = new ModelUtils();
+
+    for (Map.Entry<Direction, Cell> entry : adjacentCells.entrySet()) {
+      deepCopiedCells.put(entry.getKey(), util.deepCopyCell(entry.getValue()));
+    }
+
+    return deepCopiedCells;
+  }
 
 
   @Override

@@ -1,6 +1,7 @@
 package model.cell;
 
 import model.card.Card;
+import model.card.ThreeTrioCards;
 import model.player.Player;
 
 /**
@@ -58,9 +59,30 @@ public class ThreeTrioCell implements Cell {
     }
 
     this.hole = cell.isHole();
-    this.card = getCardNoRestrictions(cell);
+    this.card = copyCard(cell);
     this.row = cell.getRow();
     this.col = cell.getCol();
+  }
+
+  private Card copyCard(Cell cell) {
+
+    if(cell.getCard() == null) {
+      return null;
+    } else {
+      return new ThreeTrioCards(cell.getCard());
+    }
+  }
+
+  /**
+   * Represents a constructor that copies a given Cell. And sets its card to the given card.
+   *
+   * @param cell to copy.
+   */
+  public ThreeTrioCell(Cell cell, Card card) {
+
+    this(cell);
+    this.card = card;
+
   }
 
   private Boolean getHole() {
@@ -68,10 +90,7 @@ public class ThreeTrioCell implements Cell {
     return this.hole;
   }
 
-  private Card getCardNoRestrictions(Cell cell) {
 
-    return this.card;
-  }
 
   @Override
   public boolean isHole() {

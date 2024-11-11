@@ -1,9 +1,11 @@
 package model;
 
 import java.util.HashMap;
+import java.util.function.Predicate;
 import model.StandardThreeTrios.PlayerKey;
 import model.Strategy.Coordinate;
 import model.card.Card;
+import model.card.Direction;
 import model.cell.Cell;
 import model.player.Player;
 
@@ -44,12 +46,12 @@ public interface ReadOnlyThreeThriosModel {
 
   Player whoOwns(int row, int col);
 
-  int flipCount(Card given, Coordinate coord);
+  int flipCount(Card given, Coordinate coord, Player player);
 
   int playerScore(Player given);
 
   boolean isGameOver();
 
-
+  HashMap<Direction, Cell> getAdjacentCells(Coordinate coord, Predicate<Cell> cellPredicate);
 
 }

@@ -1,6 +1,6 @@
 package model.Strategy;
 
-public class Coord {
+public class Coord implements Coordinate {
 
   private final int row;
   private final int col;

@@ -122,5 +122,11 @@ public class ModelUtils {
     return deck;
   }
 
+  public Cell deepCopyCell(Cell cell) {
+
+    return new ThreeTrioCell(cell);
+
+  }
+
 
 }

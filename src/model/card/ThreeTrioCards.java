@@ -19,6 +19,7 @@ public class ThreeTrioCards implements Card {
    * Name of the card, used for the view.
    */
   private final String name;
+
   /**
    * Represents the player who owns this specific card.
    */
@@ -66,6 +67,29 @@ public class ThreeTrioCards implements Card {
     this.attackVals = given;
     this.player = null;
   }
+
+  public ThreeTrioCards(Card card) {
+
+    this.name = card.getName();
+    this.attackVals = copyAttackVals(card);
+    this.player = card.getPlayer();
+
+  }
+
+  private HashMap<Direction, Integer> copyAttackVals(Card card) {
+
+    HashMap<Direction, Integer> copiedVals = new HashMap<>();
+
+    for (Direction direction : Direction.values()) {
+
+      copiedVals.put(direction, card.getAttackVal(direction));
+
+    }
+
+    return copiedVals;
+  }
+
+
 
   /**
    * // Everything from the interface. But also emphasizing that: This method relies on the
