@@ -121,9 +121,6 @@ public class ThreeTrioCell implements Cell {
   @Override
   public Card getCard() {
 
-    if (this.card == null || this.hole) {
-      throw new IllegalArgumentException("This cell is empty. Or is a hole.");
-    }
 
     return this.card;
   }

@@ -2,6 +2,8 @@ package model.Strategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import model.ReadOnlyThreeThriosModel;
 import model.card.Card;
 import model.cell.Cell;
@@ -12,10 +14,12 @@ import model.player.Player;
  */
 public class MostFlips implements ThreeTriosStrategy {
 
-  public ArrayList<HashMap<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model,
+
+
+  public List<Map<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model,
       Player player) {
     Cell[][] grid = model.getGrid();
-    ArrayList<HashMap<String, Integer>> moves = new ArrayList<>();
+    List<Map<String, Integer>> moves = new ArrayList<Map<String, Integer>>();
     ArrayList<Card> playerHand = player.getHand();
     int highestCount = 0;
 
@@ -26,7 +30,7 @@ public class MostFlips implements ThreeTriosStrategy {
             int count = model.flipCount(playerHand.get(handIndx), new Coord(row, col), player);
             if (count > highestCount) {
               moves.clear();
-              HashMap<String, Integer> highestMove = createMoveInfo(handIndx, row, col);
+              Map<String, Integer> highestMove = createMoveInfo(handIndx, row, col);
               moves.add(highestMove);
               highestCount = count;
             } else if (highestCount != 0 && (count == highestCount)) {
@@ -40,14 +44,9 @@ public class MostFlips implements ThreeTriosStrategy {
     return moves;
   }
 
-    private HashMap<String, Integer> createMoveInfo (int index, int row, int col) {
+    private Map<String, Integer> createMoveInfo (int index, int row, int col) {
 
-      HashMap<String, Integer> cardInfo = new HashMap<String, Integer>();
-      cardInfo.put("index", index);
-      cardInfo.put("row", row);
-      cardInfo.put("col", col);
-
-      return cardInfo;
+      return new StrategyUtils().createMoveInfo(index, row, col);
     }
 
 

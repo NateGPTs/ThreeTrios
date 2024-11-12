@@ -2,6 +2,8 @@ package model.Strategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import model.ReadOnlyThreeThriosModel;
 import model.cell.Cell;
 import model.player.Player;
@@ -11,9 +13,9 @@ public class StandardBestMove implements ReturnBestMove {
   private ThreeTriosStrategy strategy;
 
   @Override
-  public HashMap<String, Integer> getBestMove(ReadOnlyThreeThriosModel model, Player player) {
+  public Map<String, Integer> getBestMove(ReadOnlyThreeThriosModel model, Player player) {
 
-    ArrayList<HashMap<String, Integer>> listOfBestMoves = strategy.chooseMove(model, player);
+    List<Map<String, Integer>> listOfBestMoves = strategy.chooseMove(model, player);
 
     if(listOfBestMoves.isEmpty()) {
 
@@ -25,13 +27,15 @@ public class StandardBestMove implements ReturnBestMove {
 
     } else {
 
-
+    return null;
 
     }
+
+    return null;
   }
 
 
-  private HashMap<String, Integer> NoValidMoves(Cell[][] grid, Player player) {
+  private HashMap<String, Integer> NoValidMoves (Cell[][] grid, Player player) {
 
     HashMap<String, Integer> cardInfo = new HashMap<String, Integer>();
 
@@ -50,15 +54,16 @@ public class StandardBestMove implements ReturnBestMove {
     return cardInfo;
   }
 
-  private HashMap<String, Integer> breakTie(ArrayList<HashMap<String, Integer>> moves) {
+  private Map<String, Integer> breakTie (List<Map<String, Integer>> moves) {
 
 
-    for(HashMap<String, Integer> move : moves) {
+    for(Map<String, Integer> move : moves) {
 
-
+      return null;
 
     }
 
+    return null;
   }
 
 

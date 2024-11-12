@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
@@ -23,8 +24,8 @@ import java.util.HashMap;
 public class StandardThreeTrios implements ThreeTriosModel {
 
   private final Cell[][] grid;
-  private final HashMap<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
-  private final HashMap<PlayerKey, Player> players;
+  private final Map<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
+  private final Map<PlayerKey, Player> players;
   private final GridCommands gridCommands;
   private GameState gameState;
   private Player whoseTurn;
@@ -73,7 +74,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   @Override
-  public void startGame(ArrayList<Card> deck) {
+  public void startGame(List<Card> deck) {
 
     if (this.gameState != GameState.NOT_STARTED) {
       throw new IllegalStateException("Game has already started or is over");
@@ -100,7 +101,6 @@ public class StandardThreeTrios implements ThreeTriosModel {
 
     Player playerOne = new ThreeTriosPlayer(Color.red, hand1);
     Player playerTwo = new ThreeTriosPlayer(Color.blue, hand2);
-
     this.players.put(PlayerKey.ONE, playerOne);
     this.players.put(PlayerKey.TWO, playerTwo);
     this.whoseTurn = playerOne;
@@ -193,8 +193,13 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   @Override
-  public int gridSize() {
-    return grid.length * (grid[0].length);
+  public int gridWidth() {
+    return this.grid.length;
+  }
+
+  @Override
+  public int gridHeight() {
+    return this.grid[0].length;
   }
 
   @Override
@@ -238,10 +243,10 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   @Override
-  public HashMap<Direction, Cell> getAdjacentCells(Coordinate coord, Predicate<Cell> cellPredicate) {
+  public Map<Direction, Cell> getAdjacentCells(Coordinate coord, Predicate<Cell> cellPredicate) {
     Cell getCell = grid[coord.getRow()][coord.getCol()];
-    HashMap<Direction, Cell> adjacentCells = this.gridCommands.getAdjacentCells(getCell, cellPredicate);
-    HashMap<Direction, Cell> deepCopiedCells = new HashMap<>();
+    Map<Direction, Cell> adjacentCells = this.gridCommands.getAdjacentCells(getCell, cellPredicate);
+    Map<Direction, Cell> deepCopiedCells = new HashMap<>();
     ModelUtils util = new ModelUtils();
 
     for (Map.Entry<Direction, Cell> entry : adjacentCells.entrySet()) {
@@ -280,6 +285,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
 
     return copiedMap;
   }
+
 
   /**
    * Counts total number of cards owned by a player in their hand and on the grid.

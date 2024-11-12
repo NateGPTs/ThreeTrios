@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import model.card.Card;
 import model.card.Direction;
 import model.card.ThreeTrioCards;
@@ -94,11 +95,11 @@ public class ModelUtils {
    * @param configName the name of the configuration file
    * @return an arraylist of cards representing the game deck
    */
-  public ArrayList<Card> createDeck(String configName) {
+  public List<Card> createDeck(String configName) {
 
     String path = "ConfigDatabase" + File.separator + configName;
     File file = new File(path);
-    ArrayList<Card> deck = new ArrayList<>();
+    List<Card> deck = new ArrayList<>();
 
     try {
 

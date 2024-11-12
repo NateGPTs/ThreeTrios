@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import model.card.Card;
 import model.cell.Cell;
 import model.player.Player;
@@ -37,6 +38,6 @@ public interface ThreeTriosModel extends ReadOnlyThreeThriosModel {
    * @throws IllegalStateException    if the game has already started or is over
    * @throws IllegalArgumentException if the deck does not have enough cards
    */
-  void startGame(ArrayList<Card> deck);
+  void startGame(List<Card> deck);
 
 }

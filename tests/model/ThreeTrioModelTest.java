@@ -1,6 +1,12 @@
 package model;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import model.Strategy.MostFlips;
+import model.Strategy.ThreeTriosStrategy;
 import model.card.Card;
+import model.card.Direction;
 import model.cell.Cell;
 import model.player.Player;
 import model.StandardThreeTrios.PlayerKey;
@@ -19,8 +25,9 @@ public class ThreeTrioModelTest {
   private ThreeTriosModel model3;
   private Cell[][] fourByFourBoard;
   private Cell[][] fiveByFiveBoardWithHoles;
-  private ArrayList<Card> cardDeck;
-  private ArrayList<Card> cardDeck2;
+  private List<Card> cardDeck;
+  private List<Card> cardDeck2;
+  private List<Card> testDeck;
 
   /**
    * Sets up the initial state of the game.
@@ -37,6 +44,7 @@ public class ThreeTrioModelTest {
     model = new StandardThreeTrios(fourByFourBoard);
     fiveByFiveBoardWithHoles = utils.createBoard("FiveByFiveBoardWithHoles");
     model3 = new StandardThreeTrios(fiveByFiveBoardWithHoles);
+    testDeck = utils.createDeck("testCardDeck");
 
   }
 
@@ -304,6 +312,62 @@ public class ThreeTrioModelTest {
       model2.startGame(this.cardDeck2);
 
     });
+
+  }
+
+  @Test
+  public void debugMostFlipsStrategy() {
+    ThreeTriosStrategy mostFlips = new MostFlips();
+    this.model3.startGame(this.cardDeck2);
+    Player player1 = this.model3.getPlayers().get(PlayerKey.ONE);
+    Player player2 = this.model3.getPlayers().get(PlayerKey.TWO);
+
+    // Print initial state
+    System.out.println("Player 1 hand size: " + player1.getHand().size());
+    for (Card card : player1.getHand()) {
+      System.out.println("Card in hand: " +
+          card.getAttackVal(Direction.NORTH) + "," +
+          card.getAttackVal(Direction.SOUTH) + "," +
+          card.getAttackVal(Direction.EAST) + "," +
+          card.getAttackVal(Direction.WEST));
+    }
+
+    // Add weak card
+    Card weakestCard = this.testDeck.get(1);
+    weakestCard.setPlayer(player2);
+    this.fiveByFiveBoardWithHoles[3][0].addCard(weakestCard);
+
+    List<Map<String, Integer>> moves = mostFlips.chooseMove(this.model3, player1);
+
+    // Print all moves found
+    System.out.println("\nAll moves found:");
+    for (Map<String, Integer> move : moves) {
+      System.out.printf("Hand: %d, Row: %d, Col: %d%n",
+          move.get("index"), move.get("row"), move.get("col"));
+    }
+  }
+
+  @Test
+  public void mostFlipsStrategy() {
+
+    ThreeTriosStrategy mostFlips = new MostFlips();
+    this.model3.startGame(this.cardDeck2);
+    Player player1 = this.model3.getPlayers().get(PlayerKey.ONE);
+    Player player2 = this.model3.getPlayers().get(PlayerKey.TWO);
+    Card card1 = this.testDeck.get(21);
+    card1.setPlayer(player2);
+    this.fiveByFiveBoardWithHoles[0][0].addCard(card1);
+    List<Map<String, Integer>> moves = mostFlips.chooseMove(this.model3, player1);
+
+    // Card 1 has 9 9 9 9 for attack value.
+    Assert.assertEquals(0, moves.size());
+
+    // Card with attack vals of 1 1 1 1
+    Card weakestCard = this.testDeck.get(1);
+    weakestCard.setPlayer(player2);
+    this.fiveByFiveBoardWithHoles[3][0].addCard(weakestCard);
+    List<Map<String, Integer>> moves2 = mostFlips.chooseMove(this.model3, player1);
+    Assert.assertEquals(10, moves2.size());
 
   }
 

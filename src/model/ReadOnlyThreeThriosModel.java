@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 import model.StandardThreeTrios.PlayerKey;
 import model.Strategy.Coordinate;
@@ -24,7 +25,8 @@ public interface ReadOnlyThreeThriosModel {
    *
    * @return a HashMap containing the players identified by their keys
    */
-  HashMap<PlayerKey, Player> getPlayers();
+  Map<PlayerKey, Player> getPlayers();
+
 
   /**
    * Gets current state of the grid.
@@ -40,7 +42,9 @@ public interface ReadOnlyThreeThriosModel {
    */
   Player currentPlayer();
 
-  int gridSize();
+  int gridWidth();
+
+  int gridHeight();
 
   Cell getCell(Coordinate coord);
 
@@ -52,6 +56,6 @@ public interface ReadOnlyThreeThriosModel {
 
   boolean isGameOver();
 
-  HashMap<Direction, Cell> getAdjacentCells(Coordinate coord, Predicate<Cell> cellPredicate);
+  Map<Direction, Cell> getAdjacentCells(Coordinate coord, Predicate<Cell> cellPredicate);
 
 }

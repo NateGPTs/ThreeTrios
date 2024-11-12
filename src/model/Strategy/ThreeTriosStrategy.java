@@ -2,6 +2,8 @@ package model.Strategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import model.ReadOnlyThreeThriosModel;
 import model.card.Card;
 import model.player.Player;
@@ -18,6 +20,6 @@ public interface ThreeTriosStrategy {
    * @param player the player doing the move.
    * @return coordinate to card pairings represented by a hashmap.
    */
-  public ArrayList<HashMap<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model, Player player);
+  public List<Map<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model, Player player);
 
 }
