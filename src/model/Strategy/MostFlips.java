@@ -28,7 +28,7 @@ public class MostFlips implements ThreeTriosStrategy {
       Player player) {
     Cell[][] grid = model.getGrid();
     List<Map<String, Integer>> moves = new ArrayList<Map<String, Integer>>();
-    ArrayList<Card> playerHand = player.getHand();
+    List<Card> playerHand = player.getHand();
     int highestCount = 0;
 
     for (int handIndx = 0; handIndx < playerHand.size(); handIndx++) {

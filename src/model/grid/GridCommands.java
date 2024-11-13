@@ -1,8 +1,7 @@
 package model.grid;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
-import model.Strategy.Coordinate;
 import model.card.Card;
 import model.card.Direction;
 import model.cell.Cell;
@@ -27,15 +26,9 @@ public interface GridCommands {
    */
   void executePlay(int row, int col, int handIndex, Player player);
 
-  /**
-   * Executes a play action by a CPU-controlled player. Details are determined by the game rules and
-   * based on CPU's strategy.
-   */
-  void executeCPUPlay();
-
 
   int countPotentialFlips(int row, int col, Card card, Player player);
 
-  HashMap<Direction, Cell> getAdjacentCells(Cell cell, Predicate<Cell> cellPredicate);
+  Map<Direction, Cell> getAdjacentCells(Cell cell, Predicate<Cell> cellPredicate);
 
 }

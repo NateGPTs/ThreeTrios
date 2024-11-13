@@ -117,9 +117,9 @@ public class ThreeTrioModelTest {
 
     Player playerTwo = this.model.getPlayers().get(PlayerKey.TWO);
 
-    ArrayList<Card> playerOneHand = playerOne.getHand();
+    List<Card> playerOneHand = playerOne.getHand();
 
-    ArrayList<Card> playerTwoHand = playerTwo.getHand();
+    List<Card> playerTwoHand = playerTwo.getHand();
 
     int actual = playerOneHand.size() + playerTwoHand.size();
 

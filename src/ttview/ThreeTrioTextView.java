@@ -6,7 +6,6 @@ import model.card.Direction;
 import model.card.ThreeTrioCards;
 import model.cell.Cell;
 import model.player.Player;
-import model.StandardThreeTrios;
 import model.StandardThreeTrios.PlayerKey;
 import java.awt.Color;
 

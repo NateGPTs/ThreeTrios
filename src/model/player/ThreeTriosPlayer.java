@@ -41,9 +41,9 @@ public class ThreeTriosPlayer implements Player {
   }
 
   @Override
-  public ArrayList<Card> getHand() {
+  public List<Card> getHand() {
 
-    ArrayList<Card> cardCopied = new ArrayList<Card>();
+    List<Card> cardCopied = new ArrayList<Card>();
 
     for (Card c : cards) {
 

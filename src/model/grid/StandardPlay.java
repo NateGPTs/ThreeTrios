@@ -1,9 +1,9 @@
 package model.grid;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
-import model.Strategy.Coordinate;
 import model.card.Card;
 import model.card.Direction;
 import model.card.ThreeTrioCards;
@@ -22,7 +22,7 @@ import java.util.function.BiFunction;
 public class StandardPlay implements GridCommands {
 
   private final Cell[][] grid;
-  private final HashMap<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
+  private final Map<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
   private Player player;
 
   /**
@@ -49,9 +49,9 @@ public class StandardPlay implements GridCommands {
    * @return HashMap with direction as a key and Cell as the value.
    */
   @Override
-  public HashMap<Direction, Cell> getAdjacentCells(Cell given, Predicate<Cell> cellPredicate) {
+  public Map<Direction, Cell> getAdjacentCells(Cell given, Predicate<Cell> cellPredicate) {
 
-    HashMap<Direction, Cell> adjacentCells = new HashMap<Direction, Cell>();
+    Map<Direction, Cell> adjacentCells = new HashMap<Direction, Cell>();
 
     for (Direction direction : Direction.values()) {
       try {
@@ -71,7 +71,7 @@ public class StandardPlay implements GridCommands {
     return adjacentCells;
   }
 
-  public HashMap<Direction, Cell> getAdjacentOccupiedCells(Cell given) {
+  public Map<Direction, Cell> getAdjacentOccupiedCells(Cell given) {
     return getAdjacentCells(given,
         cell -> !cell.isHole() &&
             !cell.isEmpty() &&
@@ -144,7 +144,7 @@ public class StandardPlay implements GridCommands {
    * Recursive simulation of card clash effects.
    */
   private void simulateClash(Cell given, Set<Cell> flippedCells, Player simulatedPlayer) {
-    HashMap<Direction, Cell> adjacentCells = getAdjacentOccupiedCells(given);
+    Map<Direction, Cell> adjacentCells = getAdjacentOccupiedCells(given);
     Card theCard = given.getCard();
 
     for (Direction direction : adjacentCells.keySet()) {
@@ -167,7 +167,7 @@ public class StandardPlay implements GridCommands {
 
   private void clashAdjacentCards(Cell given, ArrayList<Cell> convertedCells) {
 
-    HashMap<Direction, Cell> adjacentCells = getAdjacentOccupiedCells(given);
+    Map<Direction, Cell> adjacentCells = getAdjacentOccupiedCells(given);
 
     Card theCard = given.getCard();
 
@@ -228,20 +228,6 @@ public class StandardPlay implements GridCommands {
     }
 
   }
-
-
-
-  /**
-   * Represents a CPU playing a move.
-   */
-  @Override
-  public void executeCPUPlay() {
-
-    // Implementation not required for this HW.
-
-  }
-
-
 
 
 

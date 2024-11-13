@@ -72,7 +72,7 @@ public class ThreeTrioPlayerTest {
    */
   @Test
   public void testGetHandDefensiveCopy() {
-    ArrayList<Card> hand = player.getHand();
+    List<Card> hand = player.getHand();
     int initialSize = hand.size();
 
     // Modify the returned hand
@@ -87,11 +87,11 @@ public class ThreeTrioPlayerTest {
    */
   @Test
   public void testPlayCardValidIndex() {
-    ArrayList<Card> handBefore = player.getHand();
+    List<Card> handBefore = player.getHand();
     Card playedCard = player.playCard(0);
 
     // Verify card was removed from hand
-    ArrayList<Card> handAfter = player.getHand();
+    List<Card> handAfter = player.getHand();
     assertEquals(handBefore.size() - 1, handAfter.size());
     assertFalse(handAfter.contains(playedCard));
   }
@@ -140,7 +140,7 @@ public class ThreeTrioPlayerTest {
    */
   @Test
   public void testCardsAssignedToPlayer() {
-    ArrayList<Card> hand = player.getHand();
+    List<Card> hand = player.getHand();
     for (Card card : hand) {
       assertEquals(player, card.getPlayer());
     }

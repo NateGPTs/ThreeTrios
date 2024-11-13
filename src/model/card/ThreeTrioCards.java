@@ -1,5 +1,6 @@
 package model.card;
 
+import java.util.Map;
 import model.player.Player;
 import java.util.HashMap;
 
@@ -14,7 +15,7 @@ public class ThreeTrioCards implements Card {
    * This is a crucial field in that, the AttackValues for a corresponding direction is stored
    * here.
    */
-  private final HashMap<Direction, Integer> attackVals;
+  private final Map<Direction, Integer> attackVals;
   /**
    * Name of the card, used for the view.
    */
@@ -76,7 +77,7 @@ public class ThreeTrioCards implements Card {
 
   }
 
-  private HashMap<Direction, Integer> copyAttackVals(Card card) {
+  private Map<Direction, Integer> copyAttackVals(Card card) {
 
     HashMap<Direction, Integer> copiedVals = new HashMap<>();
 

@@ -1,8 +1,8 @@
 package model.player;
 
+import java.util.List;
 import model.card.Card;
 import java.awt.Color;
-import java.util.ArrayList;
 
 /**
  * Represents a player in the Three Trios game with qualities such as their color, hand of cards,
@@ -23,7 +23,7 @@ public interface Player {
    *
    * @return an arraylist of cards in player's hand
    */
-  ArrayList<Card> getHand();
+  List<Card> getHand();
 
 
   /**
