@@ -50,7 +50,7 @@ public interface ReadOnlyThreeThriosModel {
 
   Player whoOwns(int row, int col);
 
-  int flipCount(Card given, Coordinate coord, Player player);
+  int flipCount(Card given, int row, int col, Player player);
 
   int playerScore(Player given);
 

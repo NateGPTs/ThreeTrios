@@ -27,7 +27,7 @@ public class MostFlips implements ThreeTriosStrategy {
       for (int row = 0; row < grid.length; row++) {
         for (int col = 0; col < grid[row].length; col++) {
           if (!grid[row][col].isHole() && grid[row][col].isEmpty()) {
-            int count = model.flipCount(playerHand.get(handIndx), new Coord(row, col), player);
+            int count = model.flipCount(playerHand.get(handIndx), row, col, player);
             if (count > highestCount) {
               moves.clear();
               Map<String, Integer> highestMove = createMoveInfo(handIndx, row, col);

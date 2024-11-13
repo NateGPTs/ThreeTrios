@@ -117,22 +117,21 @@ public class StandardPlay implements GridCommands {
   /**
    * Simulates a card play to count how many cells would flip, without actually making the moves.
    *
-   * @param coords representing coordinates.
    * @param card Card to simulate playing
    * @param player Player making the move
    * @return Number of cells that would flip
    */
-  public int countPotentialFlips(Coordinate coords, Card card, Player player) {
+  public int countPotentialFlips(int row, int col, Card card, Player player) {
 
-    if (!isInBounds(coords.getRow(), coords.getCol()) || card == null || player == null) {
+    if (!isInBounds(row, col) || card == null || player == null) {
       return 0;
     }
 
-    if (!grid[coords.getRow()][coords.getCol()].isEmpty()) {
+    if (!grid[row][col].isEmpty()) {
       return 0;
     }
 
-    Cell tempCell = new ThreeTrioCell(coords.getRow(), coords.getCol());
+    Cell tempCell = new ThreeTrioCell(row, col);
     tempCell.addCard(card);
     card.setPlayer(player);
     Set<Cell> cellsToFlip = new HashSet<>();

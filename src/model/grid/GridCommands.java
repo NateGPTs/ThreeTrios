@@ -34,7 +34,7 @@ public interface GridCommands {
   void executeCPUPlay();
 
 
-  int countPotentialFlips(Coordinate coords, Card card, Player player);
+  int countPotentialFlips(int row, int col, Card card, Player player);
 
   HashMap<Direction, Cell> getAdjacentCells(Cell cell, Predicate<Cell> cellPredicate);
 

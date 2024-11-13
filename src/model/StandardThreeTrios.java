@@ -130,7 +130,15 @@ public class StandardThreeTrios implements ThreeTriosModel {
   @Override
   public void playToGridCPU() {
 
-    // Not to be implemented for this HW.
+    if(!this.currentPlayer().isCPU()) {
+      throw new IllegalStateException("Player is not CPU");
+    } else {
+
+
+
+    }
+
+
 
   }
 
@@ -213,8 +221,8 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   @Override
-  public int flipCount(Card given, Coordinate coord, Player player) {
-    return this.gridCommands.countPotentialFlips(coord, given, player);
+  public int flipCount(Card given, int row, int col, Player player) {
+    return this.gridCommands.countPotentialFlips(row, col, given, player);
   }
 
   @Override
