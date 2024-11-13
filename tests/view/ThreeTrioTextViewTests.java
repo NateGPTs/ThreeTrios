@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
+import java.util.List;
 import model.card.Card;
 import model.card.Direction;
 import model.card.ThreeTrioCards;
@@ -27,7 +28,7 @@ public class ThreeTrioTextViewTests {
   private StandardThreeTrios model;
   private ThreeTrioTextView view;
   private Cell[][] grid;
-  private ArrayList<Card> deck;
+  private List<Card> deck;
 
   /**
    * Sets the initial state up.

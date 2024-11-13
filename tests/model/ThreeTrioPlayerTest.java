@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import model.card.Card;
 import model.player.Player;
 import model.player.ThreeTriosPlayer;
@@ -28,7 +29,7 @@ public class ThreeTrioPlayerTest {
   @Before
   public void setUp() throws Exception {
     ModelUtils util = new ModelUtils();
-    ArrayList<Card> initialHand = util.createDeck("16CardDeck");
+    List<Card> initialHand = util.createDeck("16CardDeck");
     player = new ThreeTriosPlayer(PLAYER_COLOR, initialHand);
   }
 

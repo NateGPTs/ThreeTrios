@@ -2,6 +2,7 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
 import model.card.Card;
 import model.card.Direction;
 import model.card.ThreeTrioCards;
@@ -23,7 +24,7 @@ public class ThreeTrioStandardPlayTest {
   private Cell[][] grid;
   private Player player;
   private StandardPlay standardPlay;
-  private ArrayList<Card> threeTrioCards;
+  private List<Card> threeTrioCards;
 
   /**
    * Sets up the grid and player instance for each test. A board is created with a specified

@@ -1,7 +1,6 @@
 package model.Strategy;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import model.ReadOnlyThreeThriosModel;
@@ -14,6 +13,15 @@ import model.player.Player;
  */
 public class MostFlips implements ThreeTriosStrategy {
 
+  private final List<Map<String, Integer>> log;
+
+  public MostFlips() {
+    this.log = new ArrayList<Map<String, Integer>>();
+  }
+
+  public MostFlips(List<Map<String, Integer>> log) {
+    this.log = log;
+  }
 
 
   public List<Map<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model,
@@ -32,9 +40,11 @@ public class MostFlips implements ThreeTriosStrategy {
               moves.clear();
               Map<String, Integer> highestMove = createMoveInfo(handIndx, row, col);
               moves.add(highestMove);
+              this.log.add(highestMove);
               highestCount = count;
             } else if (highestCount != 0 && (count == highestCount)) {
               moves.add(createMoveInfo(handIndx, row, col));
+              this.log.add(createMoveInfo(handIndx, row, col));
             }
           }
         }
@@ -44,10 +54,15 @@ public class MostFlips implements ThreeTriosStrategy {
     return moves;
   }
 
-    private Map<String, Integer> createMoveInfo (int index, int row, int col) {
+  @Override
+  public List<Map<String, Integer>> moveLog() {
+    return this.log;
+  }
+
+  private Map<String, Integer> createMoveInfo (int index, int row, int col) {
 
       return new StrategyUtils().createMoveInfo(index, row, col);
-    }
+  }
 
 
 

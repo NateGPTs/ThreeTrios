@@ -1,5 +1,6 @@
 package model.player;
 
+import java.util.List;
 import model.card.Card;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class ThreeTriosPlayer implements Player {
 
   private final Color playerColor;
-  private final ArrayList<Card> cards;
+  private final List<Card> cards;
   private final Boolean isCPU;
 
 
@@ -21,7 +22,7 @@ public class ThreeTriosPlayer implements Player {
    * @param playerColor the color representing the player
    * @param cards       the initial hand of cards
    */
-  public ThreeTriosPlayer(Color playerColor, ArrayList<Card> cards) {
+  public ThreeTriosPlayer(Color playerColor, List<Card> cards) {
     this.playerColor = playerColor;
     this.cards = cards;
     this.isCPU = false;
@@ -62,6 +63,9 @@ public class ThreeTriosPlayer implements Player {
   public Boolean isCPU() {
     return this.isCPU;
   }
+
+
+
 
 
 }

@@ -40,4 +40,6 @@ public interface Player {
    * @return true if the player is a CPU; false otherwise
    */
   Boolean isCPU();
+
+
 }

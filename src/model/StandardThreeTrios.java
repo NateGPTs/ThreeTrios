@@ -5,6 +5,11 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import model.Strategy.Coordinate;
+import model.Strategy.Corners;
+import model.Strategy.MostFlips;
+import model.Strategy.ReturnBestMove;
+import model.Strategy.StandardBestMove;
+import model.Strategy.ThreeTriosStrategy;
 import model.card.Card;
 import model.card.Direction;
 import model.cell.Cell;
@@ -27,6 +32,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
   private final Map<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
   private final Map<PlayerKey, Player> players;
   private final GridCommands gridCommands;
+  protected List<ThreeTriosStrategy> strategies;
   private GameState gameState;
   private Player whoseTurn;
 
@@ -39,7 +45,8 @@ public class StandardThreeTrios implements ThreeTriosModel {
       throw new IllegalArgumentException("Grid is null");
     }
 
-    this.players = new HashMap<>();
+    Map<PlayerKey, Player> players = new HashMap<>();
+    this.players = players;
     this.gameState = GameState.NOT_STARTED;
     this.grid = grid;
     this.gridCommands = new StandardPlay(grid);
@@ -48,6 +55,16 @@ public class StandardThreeTrios implements ThreeTriosModel {
     DirectionalValues.put(Direction.WEST, (r, c) -> this.grid[r][c - 1]);
     DirectionalValues.put(Direction.NORTH, (r, c) -> this.grid[r - 1][c]);
     DirectionalValues.put(Direction.SOUTH, (r, c) -> this.grid[r + 1][c]);
+    List<ThreeTriosStrategy> strategies = new ArrayList<>();
+    this.strategies =  strategies;
+    this.strategies.add(new MostFlips());
+    this.strategies.add(new Corners());
+  }
+
+  public StandardThreeTrios(Cell[][] grid, List<ThreeTriosStrategy> strategies) {
+
+    this(grid);
+    this.strategies = strategies;
   }
 
   private int getNumOfOpenGridCells(Cell[][] grid) {
@@ -134,12 +151,11 @@ public class StandardThreeTrios implements ThreeTriosModel {
       throw new IllegalStateException("Player is not CPU");
     } else {
 
-
+      ReturnBestMove cpuMove = new StandardBestMove(this.strategies);
+      Map<String, Integer> move = cpuMove.getBestMove(this, this.currentPlayer());
+      playToGrid(move.get("row"), move.get("col"), move.get("index"));
 
     }
-
-
-
   }
 
   /**

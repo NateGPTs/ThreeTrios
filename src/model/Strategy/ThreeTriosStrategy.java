@@ -22,4 +22,7 @@ public interface ThreeTriosStrategy {
    */
   public List<Map<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model, Player player);
 
+  public List<Map<String, Integer>> moveLog();
+
+
 }

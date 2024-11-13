@@ -10,7 +10,7 @@ import model.player.Player;
 
 public class StandardBestMove implements ReturnBestMove {
 
-  private List<ThreeTriosStrategy> strategies;
+  private final List<ThreeTriosStrategy> strategies;
 
   public StandardBestMove(List<ThreeTriosStrategy> strategies) {
 
@@ -38,7 +38,6 @@ public class StandardBestMove implements ReturnBestMove {
     List<Map<String, Integer>> listOfBestMoves = strategy.chooseMove(model, player);
 
     if(listOfBestMoves.isEmpty()) {
-
       return null;
 
     } else if (listOfBestMoves.size() == 1) {
@@ -49,7 +48,6 @@ public class StandardBestMove implements ReturnBestMove {
 
       return breakTie(listOfBestMoves);
     }
-
   }
 
 
@@ -115,7 +113,6 @@ public class StandardBestMove implements ReturnBestMove {
 
     return bestMove;
   }
-
 
 
 }

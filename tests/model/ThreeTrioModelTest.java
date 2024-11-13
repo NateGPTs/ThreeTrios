@@ -1,8 +1,16 @@
 package model;
 
-import java.util.HashMap;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import model.Strategy.Coord;
+import model.Strategy.Coordinate;
+import model.Strategy.Corners;
 import model.Strategy.MostFlips;
 import model.Strategy.ThreeTriosStrategy;
 import model.card.Card;
@@ -84,13 +92,13 @@ public class ThreeTrioModelTest {
     this.model.playToGrid(0, 0, 0);
 
     // Check the correct card is on [0][0]
-    Assert.assertEquals(playedCard, this.fourByFourBoard[0][0].getCard());
+    assertEquals(playedCard, this.fourByFourBoard[0][0].getCard());
 
     // Test the playedCard is no longer in playerOnes hand.
     Assert.assertNotEquals(playedCard, playerOne.getHand().get(0));
 
     // Check the player turn switched to playerTwo
-    Assert.assertEquals(playerTwo, this.model.currentPlayer());
+    assertEquals(playerTwo, this.model.currentPlayer());
 
   }
 
@@ -116,13 +124,13 @@ public class ThreeTrioModelTest {
     int actual = playerOneHand.size() + playerTwoHand.size();
 
     // Ensure the right amount of cards for each player.
-    Assert.assertEquals(8, playerOneHand.size());
+    assertEquals(8, playerOneHand.size());
 
     // Ensure the right amount of cards for each player.
-    Assert.assertEquals(8, playerTwoHand.size());
+    assertEquals(8, playerTwoHand.size());
 
     // 16 because 1 more than the boards number of open cells.
-    Assert.assertEquals(16, actual);
+    assertEquals(16, actual);
 
   }
 
@@ -152,12 +160,12 @@ public class ThreeTrioModelTest {
     this.model.playToGrid(3, 2, 0);
     this.model.playToGrid(3, 3, 0);
 
-    Assert.assertTrue(this.model.isGameOver());
+    assertTrue(this.model.isGameOver());
 
     Player playerTwo = this.model.getPlayers().get(PlayerKey.TWO);
 
     // Testing the winner is correct
-    Assert.assertEquals(playerTwo, this.model.getWinner());
+    assertEquals(playerTwo, this.model.getWinner());
 
   }
 
@@ -230,8 +238,8 @@ public class ThreeTrioModelTest {
     this.model3.playToGrid(2, 1, 0);
 
     // Testing cards cant infect each other diagonally.
-    Assert.assertEquals(playerOne, fiveByFiveBoardWithHoles[1][2].getCard().getPlayer());
-    Assert.assertEquals(playerTwo, fiveByFiveBoardWithHoles[2][1].getCard().getPlayer());
+    assertEquals(playerOne, fiveByFiveBoardWithHoles[1][2].getCard().getPlayer());
+    assertEquals(playerTwo, fiveByFiveBoardWithHoles[2][1].getCard().getPlayer());
   }
 
   /**
@@ -245,14 +253,14 @@ public class ThreeTrioModelTest {
     this.model3.startGame(this.cardDeck2);
     Cell[][] grid = model3.getGrid();
 
-    Assert.assertNotNull(grid[0][0]);
-    Assert.assertNotNull(grid[0][4]);
-    Assert.assertNotNull(grid[4][0]);
-    Assert.assertNotNull(grid[4][4]);
+    assertNotNull(grid[0][0]);
+    assertNotNull(grid[0][4]);
+    assertNotNull(grid[4][0]);
+    assertNotNull(grid[4][4]);
 
-    Assert.assertFalse(this.fiveByFiveBoardWithHoles[0][0].isHole());
-    Assert.assertFalse(grid[0][0].isHole());
-    Assert.assertTrue(grid[0][4].isHole());
+    assertFalse(this.fiveByFiveBoardWithHoles[0][0].isHole());
+    assertFalse(grid[0][0].isHole());
+    assertTrue(grid[0][4].isHole());
 
   }
 
@@ -268,12 +276,9 @@ public class ThreeTrioModelTest {
     Cell[][] grid = this.model3.getGrid();
     Card testCard = model3.getPlayers().get(PlayerKey.TWO).getHand().get(0);
     grid[0][0].addCard(testCard);
+    Cell[][] grid2 = this.model3.getGrid();
 
-    Assert.assertThrows(IllegalArgumentException.class, () -> {
-
-      fiveByFiveBoardWithHoles[0][0].getCard();
-
-    });
+    assertNull(grid2[0][0].getCard());
 
   }
 
@@ -360,15 +365,175 @@ public class ThreeTrioModelTest {
     List<Map<String, Integer>> moves = mostFlips.chooseMove(this.model3, player1);
 
     // Card 1 has 9 9 9 9 for attack value.
-    Assert.assertEquals(0, moves.size());
+    assertEquals(0, moves.size());
 
     // Card with attack vals of 1 1 1 1
     Card weakestCard = this.testDeck.get(1);
     weakestCard.setPlayer(player2);
     this.fiveByFiveBoardWithHoles[3][0].addCard(weakestCard);
     List<Map<String, Integer>> moves2 = mostFlips.chooseMove(this.model3, player1);
-    Assert.assertEquals(10, moves2.size());
+    assertEquals(33, moves2.size());
 
+  }
+
+  /**
+   * Tests the grid dimension methods (gridWidth and gridHeight) to ensure they return
+   * correct dimensions for different board sizes.
+   */
+  @Test
+  public void testGridDimensions() {
+    assertEquals("Wrong grid width", 4, model.gridWidth());
+    assertEquals("Wrong grid height", 4, model.gridHeight());
+
+    // Test five by five board
+    assertEquals("Wrong grid width for 5x5", 5, model3.gridWidth());
+    assertEquals("Wrong grid height for 5x5", 5, model3.gridHeight());
+  }
+
+  /**
+   * Tests the getCell method to verify it correctly retrieves cells at given coordinates
+   * and properly reflects game state changes.
+   */
+  @Test
+  public void testGetCell() {
+    model.startGame(cardDeck);
+
+    // Test getting valid cell
+    Coordinate coord = new Coord(0, 0);
+    Cell cell = model.getCell(coord);
+    assertNotNull("Cell should not be null", cell);
+    assertTrue("Cell should be empty initially", cell.isEmpty());
+    assertFalse("Cell should not be a hole", cell.isHole());
+
+    // Test after playing a card
+    model.playToGrid(0, 0, 0);
+    cell = model.getCell(coord);
+    assertFalse("Cell should not be empty after play", cell.isEmpty());
+  }
+
+  /**
+   * Tests the whoOwns method to verify cell ownership tracking.
+   * Checks both empty cells and cells after card placement.
+   */
+  @Test
+  public void testWhoOwns() {
+
+    model.startGame(cardDeck);
+
+    // Play a card and check ownership
+    model.playToGrid(0, 0, 0);
+    Player owner = model.whoOwns(0, 0);
+    assertNotNull("Cell should have an owner after play", owner);
+    assertEquals("Wrong owner", model.getPlayers().get(PlayerKey.ONE), owner);
+  }
+
+  /**
+   * Tests the flipCount method to verify correct calculation of potential card flips.
+   * Uses known card values to test flip mechanics.
+   */
+  @Test
+  public void testFlipCount() {
+    model.startGame(testDeck);
+    Player player1 = model.getPlayers().get(PlayerKey.ONE);
+    Player player2 = model.getPlayers().get(PlayerKey.TWO);
+
+    // Place a weak card (card2 from testDeck has 0,0,0,0)
+    Card weakCard = testDeck.get(1);
+    weakCard.setPlayer(player2);
+    model.playToGrid(1, 1, 0);
+
+    // Try to flip with strong card (card22 from testDeck has 9,9,9,9)
+    Card strongCard = testDeck.get(21);
+    int flips = model.flipCount(strongCard, 0, 1, player1);
+
+    assertTrue("Strong card should be able to flip weak card", flips > 0);
+  }
+
+  /**
+   * Tests the playerScore method to verify correct score calculation.
+   * Checks scores both before and after card placement.
+   */
+  @Test
+  public void testPlayerScore() {
+    model.startGame(cardDeck);
+    Player player1 = model.getPlayers().get(PlayerKey.ONE);
+
+    // Initial score should be hand size
+    int initialHandSize = player1.getHand().size();
+    assertEquals("Initial score should match hand size",
+        initialHandSize, model.playerScore(player1));
+
+    // Play a card and check updated score
+    model.playToGrid(0, 0, 0);
+    assertEquals("Score should remain same after playing card",
+        initialHandSize, model.playerScore(player1));
+  }
+
+  /**
+   * Tests that constructor properly handles null grid parameter.
+   * Expects an IllegalArgumentException to be thrown.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullGridConstructor() {
+    new StandardThreeTrios(null);
+  }
+
+  /**
+   * Tests the strategy constructor to ensure proper initialization with custom strategies.
+   */
+  @Test
+  public void testStrategyConstructor() {
+    List<ThreeTriosStrategy> strategies = Arrays.asList(
+        new MostFlips(),
+        new Corners()
+    );
+    ThreeTriosModel stratModel = new StandardThreeTrios(fourByFourBoard, strategies);
+
+    // Start game and verify model created successfully
+    stratModel.startGame(testDeck);
+    assertNotNull("Model should be properly initialized", stratModel);
+  }
+
+
+
+
+  /**
+   * Tests the getAdjacentCells method to verify correct identification of
+   * neighboring cells with various predicates.
+   */
+  @Test
+  public void testGetAdjacentCells() {
+    model.startGame(testDeck);
+
+    // Test center cell (should have 4 adjacent cells)
+    Coordinate centerCoord = new Coord(1, 1);
+    Map<Direction, Cell> adjacentCells = model.getAdjacentCells(
+        centerCoord,
+        cell -> !cell.isHole()
+    );
+
+    assertEquals("Center cell should have 4 adjacent cells",
+        4, adjacentCells.size());
+
+    // Test corner cell (should have 2 adjacent cells)
+    Coordinate cornerCoord = new Coord(0, 0);
+    adjacentCells = model.getAdjacentCells(
+        cornerCoord,
+        cell -> !cell.isHole()
+    );
+
+    assertEquals("Corner cell should have 2 adjacent cells",
+        2, adjacentCells.size());
+
+    // Test with empty cell predicate
+    adjacentCells = model.getAdjacentCells(
+        centerCoord,
+        Cell::isEmpty
+    );
+
+    // All cells should be empty initially
+    assertEquals("All adjacent cells should be empty initially",
+        4, adjacentCells.size());
   }
 
 

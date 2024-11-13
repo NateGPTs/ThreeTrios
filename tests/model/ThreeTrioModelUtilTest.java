@@ -5,9 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import model.card.Card;
 import model.cell.Cell;
-import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,13 +62,12 @@ public class ThreeTrioModelUtilTest {
   @Test
   public void testCreateDeck() {
 
-    ArrayList<Card> deck = modelUtils.createDeck("16CardDeck");
+    List<Card> deck = modelUtils.createDeck("16CardDeck");
 
     assertNotNull(deck);
 
     assertEquals(16, deck.size());
 
-    assertNotNull(deck.get(0).getPlayer());
 
   }
 

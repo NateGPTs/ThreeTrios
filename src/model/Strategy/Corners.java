@@ -13,22 +13,46 @@ import model.player.Player;
 
 public class Corners implements ThreeTriosStrategy {
 
+  private final List<Map<String, Integer>> log;
+
+  public Corners() {
+    this.log = new ArrayList<Map<String, Integer>>();
+  }
+
+  public Corners(List<Map<String, Integer>> log) {
+    this.log = log;
+  }
 
   @Override
   public List<Map<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model, Player player) {
-
     Map<Integer, Coordinate> cornerCells = getCornerCells(model);
     List<Map<String, Integer>> moves = new ArrayList<Map<String, Integer>>();
 
+    // For each corner, create a move inspection record
     for (Map.Entry<Integer, Coordinate> entry : cornerCells.entrySet()) {
-      Coordinate value = entry.getValue();
-      Map<Direction, Cell> adjacentCell =
-          model.getAdjacentCells(value, cell -> !cell.isHole() && cell.isEmpty());
-      List<Direction> directions = Arrays.asList(Direction.values());
-      moves.addAll(highestAttackVal(player, directions, value));
+      Coordinate coord = entry.getValue();
+      Cell cell = model.getGrid()[coord.getRow()][coord.getCol()];
+
+      // Only inspect non-hole cells that are empty
+      if (!cell.isHole() && cell.isEmpty()) {
+        // Log that we inspected this corner
+        Map<String, Integer> inspection = createMoveInfo(0, coord.getRow(), coord.getCol());
+        this.log.add(inspection);
+
+        // Then proceed with move evaluation
+        Map<Direction, Cell> adjacentCell =
+            model.getAdjacentCells(coord, c -> !c.isHole() && c.isEmpty());
+        List<Direction> directions = Arrays.asList(Direction.values());
+        moves.addAll(highestAttackVal(player, directions, coord));
+      }
     }
 
     return moves;
+  }
+
+  @Override
+  public List<Map<String, Integer>> moveLog() {
+    return this.log;
   }
 
   private Map<Integer, Coordinate> getCornerCells(ReadOnlyThreeThriosModel model) {
@@ -58,10 +82,12 @@ public class Corners implements ThreeTriosStrategy {
 
       if (currHighestVal == highestAttackVal) {
         highestAttackMap.add(createMoveInfo(index, coord.getRow(), coord.getCol()));
+        this.log.add(createMoveInfo(index, coord.getRow(), coord.getCol()));
       } else if (currHighestVal > highestAttackVal) {
         highestAttackMap.clear();
         highestAttackVal = currHighestVal;
         highestAttackMap.add(createMoveInfo(index, coord.getRow(), coord.getCol()));
+        this.log.add(createMoveInfo(index, coord.getRow(), coord.getCol()));
       }
     }
 
