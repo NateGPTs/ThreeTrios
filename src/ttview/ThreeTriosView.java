@@ -9,7 +9,7 @@ import model.ThreeTriosModel;
 
 public class ThreeTriosView extends JFrame implements ActionListener {
 
-  ThreeTriosModel model;
+  private ThreeTriosModel model;
 
   public ThreeTriosView(ThreeTriosModel model) {
     this.model = model;
