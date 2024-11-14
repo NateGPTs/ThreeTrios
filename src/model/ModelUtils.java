@@ -123,6 +123,12 @@ public class ModelUtils {
     return deck;
   }
 
+  /**
+   * Deep copy a given cell ThreeTrioCell.
+   *
+   * @param cell instance.
+   * @return a Cell that is deep copied.
+   */
   public Cell deepCopyCell(Cell cell) {
 
     return new ThreeTrioCell(cell);

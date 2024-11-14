@@ -27,6 +27,7 @@ public class ThreeTriosView extends JFrame implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
 
+    // Not required for this assignment.
   }
 
 

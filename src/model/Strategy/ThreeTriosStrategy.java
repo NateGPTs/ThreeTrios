@@ -1,11 +1,8 @@
 package model.Strategy;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.ReadOnlyThreeThriosModel;
-import model.card.Card;
+import model.ReadOnlyThreeTriosModel;
 import model.player.Player;
 
 /**
@@ -20,8 +17,15 @@ public interface ThreeTriosStrategy {
    * @param player the player doing the move.
    * @return coordinate to card pairings represented by a hashmap.
    */
-  public List<Map<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model, Player player);
+  public List<Map<String, Integer>> chooseMove(ReadOnlyThreeTriosModel model, Player player);
 
+  /**
+   * Each strategy has a moveLog to document all the cells and combinations checked.
+   *
+   * @return a list of all moves(each represented by a Map<String, Integer>)
+   * with an "index" key representing a players card hand index, row" key row index of the board, "
+   * col" key representing column index of board card placement.
+   */
   public List<Map<String, Integer>> moveLog();
 
 

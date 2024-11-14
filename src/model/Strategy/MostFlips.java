@@ -3,28 +3,54 @@ package model.Strategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import model.ReadOnlyThreeThriosModel;
+import model.ReadOnlyThreeTriosModel;
 import model.card.Card;
 import model.cell.Cell;
 import model.player.Player;
 
 /**
- * Represents a strategy for the CPU, where moves that flip the most cards are "best".
+ * Represents a strategy for the CPU that prioritizes moves which flip the most opponent cards.
+ * This strategy evaluates each possible move based on how many opponent cards it can capture
+ * and selects the moves that result in the maximum number of flips.
  */
 public class MostFlips implements ThreeTriosStrategy {
 
+  /**
+   * Maintains a record of moves and their evaluations performed by this strategy.
+   * Each entry in the list is a map containing the move details (card index and position).
+   */
   private final List<Map<String, Integer>> log;
 
+  /**
+   * Constructs a new MostFlips strategy with an empty move log.
+   */
   public MostFlips() {
     this.log = new ArrayList<Map<String, Integer>>();
   }
 
+  /**
+   * Constructs a new MostFlips strategy with a pre-existing move log.
+   *
+   * @param log the list of previous move records to initialize with
+   */
   public MostFlips(List<Map<String, Integer>> log) {
     this.log = log;
   }
 
-
-  public List<Map<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model,
+  /**
+   * Determines the optimal moves by evaluating every possible card placement
+   * and selecting those that result in the most opponent card flips.
+   * For each card in the player's hand, this method:
+   * - Checks every valid position on the grid
+   * - Calculates how many opponent cards would be flipped
+   * - Keeps track of moves that result in the maximum number of flips
+   *
+   * @param model the current state of the game
+   * @param player the player for whom moves should be calculated
+   * @return a list of moves that would result in the maximum number of flips,
+   *         where each move is represented as a map containing card index and target position
+   */
+  public List<Map<String, Integer>> chooseMove(ReadOnlyThreeTriosModel model,
       Player player) {
     Cell[][] grid = model.getGrid();
     List<Map<String, Integer>> moves = new ArrayList<Map<String, Integer>>();

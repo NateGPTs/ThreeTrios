@@ -58,7 +58,7 @@ public class StrategyTests {
   // Test 2: Verify MostFlips chooses highest value move
   @Test
   public void testMostFlipsChoosesHighestValueMove() {
-    // Set up mock model to return specific flip values
+
     model.setFlipValue(1, 1, 2); // Some flips
     model.setFlipValue(2, 2, 5); // Most flips - should be chosen
     model.setFlipValue(0, 0, 1); // Few flips
@@ -67,7 +67,7 @@ public class StrategyTests {
     model.playMostFlips();
 
     // Get the moves that were considered best
-    List<Map<String, Integer>> bestMoves = model.mostFlipStrat.chooseMove(model, model.currentPlayer());
+    List<Map<String, Integer>> bestMoves = model.getInspectedMoves();
 
     // Verify the strategy chose the move with most flips (2,2)
     assertTrue("Strategy did not choose highest value move",
@@ -88,7 +88,7 @@ public class StrategyTests {
     model.playMostFlips();
 
     // Get the moves that were considered best
-    List<Map<String, Integer>> bestMoves = model.mostFlipStrat.chooseMove(model, model.currentPlayer());
+    List<Map<String, Integer>> bestMoves = model.getInspectedMoves();
 
     // 16 positions from two equal moves.
     assertEquals("Should find 16 best moves", 16, bestMoves.size());

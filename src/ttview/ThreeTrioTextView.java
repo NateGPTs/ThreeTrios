@@ -1,6 +1,6 @@
 package ttview;
 
-import model.ReadOnlyThreeThriosModel;
+import model.ReadOnlyThreeTriosModel;
 import model.card.Card;
 import model.card.Direction;
 import model.card.ThreeTrioCards;
@@ -15,14 +15,14 @@ import java.awt.Color;
  */
 public class ThreeTrioTextView implements TextView {
 
-  private final ReadOnlyThreeThriosModel model;
+  private final ReadOnlyThreeTriosModel model;
 
   /**
    * Constructs a ThreeTrioTextView with the specified game model.
    *
    * @param model the StandardThreeTrios model holding the game state
    */
-  public ThreeTrioTextView(ReadOnlyThreeThriosModel model) {
+  public ThreeTrioTextView(ReadOnlyThreeTriosModel model) {
 
     this.model = model;
   }

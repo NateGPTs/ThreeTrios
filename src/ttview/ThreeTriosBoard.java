@@ -9,15 +9,16 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
-import model.ReadOnlyThreeThriosModel;
+import model.ReadOnlyThreeTriosModel;
 import model.StandardThreeTrios.PlayerKey;
 import model.card.Card;
 import model.card.Direction;
 import model.cell.Cell;
 import model.player.Player;
 
-class ThreeTriosBoard extends JPanel implements MouseListener {
-  private final ReadOnlyThreeThriosModel model;
+
+public class ThreeTriosBoard extends JPanel implements MouseListener {
+  private final ReadOnlyThreeTriosModel model;
   private final List<Card> hand1;
   private final List<Card> hand2;
   private final Color color1;
@@ -27,7 +28,7 @@ class ThreeTriosBoard extends JPanel implements MouseListener {
   private Integer selectedCardIndex;
   private PlayerKey selectedHandOwner;
 
-  public ThreeTriosBoard(ReadOnlyThreeThriosModel model) {
+  public ThreeTriosBoard(ReadOnlyThreeTriosModel model) {
     this.model = model;
     Map<PlayerKey, Player> players = model.getPlayers();
     Player player1 = players.get(PlayerKey.ONE);

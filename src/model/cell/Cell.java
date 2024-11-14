@@ -68,6 +68,8 @@ public interface Cell {
    */
   void setPlayer(Player player);
 
-
+  /**
+   * Get the owner of the card.
+   */
   Player getOwner();
 }

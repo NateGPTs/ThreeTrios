@@ -12,14 +12,23 @@ import model.card.Card;
 import model.cell.Cell;
 import model.player.Player;
 
+/**
+ * A MockModel to test the functionalities of the StandardThreeTrios model.
+ */
 public class MockModel extends StandardThreeTrios implements MockModelInterface {
+
   private final List<Map<String, Integer>> inspectedMoves;
   private final Map<String, Integer> flipValues;
   private final Map<String, Boolean> validMoves;
   private final List<Map<String, Integer>> log;
   private ThreeTriosStrategy cornerStrat;
-  ThreeTriosStrategy mostFlipStrat;
+  private ThreeTriosStrategy mostFlipStrat;
 
+  /**
+   * Constructor creates a mock model based on the given grid.
+   *
+   * @param grid to test the model on.
+   */
   public MockModel(Cell[][] grid) {
     super(grid);
     this.inspectedMoves = new ArrayList<Map<String, Integer>>();
@@ -50,20 +59,24 @@ public class MockModel extends StandardThreeTrios implements MockModelInterface 
     return flipValues.getOrDefault(key, 0);
   }
 
+  @Override
   public void setFlipValue(int row, int col, int value) {
     String key = row + "," + col;
     flipValues.put(key, value);
   }
 
+  @Override
   public void setValidMove(int row, int col, boolean isValid) {
     String key = row + "," + col;
     validMoves.put(key, isValid);
   }
 
+  @Override
   public List<Map<String, Integer>> getInspectedMoves() {
     return new ArrayList<Map<String, Integer>>(inspectedMoves);
   }
 
+  @Override
   public void clearInspectionLog() {
     inspectedMoves.clear();
   }
@@ -77,12 +90,14 @@ public class MockModel extends StandardThreeTrios implements MockModelInterface 
     return strategies;
   }
 
+  @Override
   public void playCorners() {
     clearInspectionLog();
     this.cornerStrat.chooseMove(this, this.currentPlayer());
     this.inspectedMoves.addAll(((Corners)this.cornerStrat).moveLog());
   }
 
+  @Override
   public void playMostFlips() {
     clearInspectionLog();
     this.mostFlipStrat.chooseMove(this, this.currentPlayer());

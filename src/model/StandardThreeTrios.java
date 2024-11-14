@@ -28,6 +28,12 @@ import java.util.HashMap;
  */
 public class StandardThreeTrios implements ThreeTriosModel {
 
+  /**
+   * This field represents a board/grid in the ThreeTrios game.
+   * Represented by a 2D array, where the rows are the first bracket, column the next one.
+   * The grid abides by a 0 based index for its rows and columns.
+   * For example, row 1 column 1 would be Cell[0][0].
+   */
   private final Cell[][] grid;
   private final Map<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
   private final Map<PlayerKey, Player> players;
@@ -61,6 +67,12 @@ public class StandardThreeTrios implements ThreeTriosModel {
     this.strategies.add(new Corners());
   }
 
+  /**
+   * A constructor that takes in the given grid, and a list of strategies for the cpu player.
+   *
+   * @param grid a 2D array of Cell classes.
+   * @param strategies a list of strategies for the CPU.
+   */
   public StandardThreeTrios(Cell[][] grid, List<ThreeTriosStrategy> strategies) {
 
     this(grid);
@@ -301,7 +313,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
   }
 
   @Override
-  public HashMap<PlayerKey, Player> getPlayers() {
+  public Map<PlayerKey, Player> getPlayers() {
 
     HashMap<PlayerKey, Player> copiedMap = new HashMap<>();
 

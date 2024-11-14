@@ -5,26 +5,39 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.ReadOnlyThreeThriosModel;
+import model.ReadOnlyThreeTriosModel;
 import model.card.Card;
 import model.card.Direction;
 import model.cell.Cell;
 import model.player.Player;
 
+/**
+ * A strategy implementation for ThreeTrios game that focuses on playing cards in corner positions.
+ * This strategy prioritizes placing cards with high attack values in the corners of the game board.
+ */
 public class Corners implements ThreeTriosStrategy {
 
+  /** Maintains a record of moves and cell inspections performed by this strategy. */
   private final List<Map<String, Integer>> log;
 
+  /**
+   * Constructs a new Corners strategy with an empty move log.
+   */
   public Corners() {
     this.log = new ArrayList<Map<String, Integer>>();
   }
 
+  /**
+   * Constructs a new Corners strategy with a pre-existing move log.
+   *
+   * @param log the list of previous move records to initialize with
+   */
   public Corners(List<Map<String, Integer>> log) {
     this.log = log;
   }
 
   @Override
-  public List<Map<String, Integer>> chooseMove(ReadOnlyThreeThriosModel model, Player player) {
+  public List<Map<String, Integer>> chooseMove(ReadOnlyThreeTriosModel model, Player player) {
     Map<Integer, Coordinate> cornerCells = getCornerCells(model);
     List<Map<String, Integer>> moves = new ArrayList<Map<String, Integer>>();
 
@@ -55,7 +68,7 @@ public class Corners implements ThreeTriosStrategy {
     return this.log;
   }
 
-  private Map<Integer, Coordinate> getCornerCells(ReadOnlyThreeThriosModel model) {
+  private Map<Integer, Coordinate> getCornerCells(ReadOnlyThreeTriosModel model) {
 
     Cell[][] grid = model.getGrid();
     Map<Integer, Coordinate> cornerCells = new HashMap<Integer, Coordinate>();

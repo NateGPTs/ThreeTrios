@@ -1,8 +1,4 @@
-import java.awt.Color;
-import java.awt.Dimension;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import model.ModelUtils;
 import model.StandardThreeTrios;
 import model.ThreeTriosModel;

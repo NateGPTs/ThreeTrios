@@ -71,7 +71,7 @@ public class StandardPlay implements GridCommands {
     return adjacentCells;
   }
 
-  public Map<Direction, Cell> getAdjacentOccupiedCells(Cell given) {
+  private Map<Direction, Cell> getAdjacentOccupiedCells(Cell given) {
     return getAdjacentCells(given,
         cell -> !cell.isHole() &&
             !cell.isEmpty() &&

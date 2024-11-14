@@ -2,17 +2,12 @@ package model;
 
 import java.util.List;
 import model.card.Card;
-import model.cell.Cell;
-import model.player.Player;
-import model.StandardThreeTrios.PlayerKey;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Interface represents the model for a Three Trios game. Methods to manage the game state, players,
  * and grid interactions.
  */
-public interface ThreeTriosModel extends ReadOnlyThreeThriosModel {
+public interface ThreeTriosModel extends ReadOnlyThreeTriosModel {
 
   /**
    * Plays a card from the current player's hand to the grid location.
@@ -35,8 +30,8 @@ public interface ThreeTriosModel extends ReadOnlyThreeThriosModel {
    * hands.
    *
    * @param deck the deck of cards
-   * @throws IllegalStateException    if the game has already started or is over
-   * @throws IllegalArgumentException if the deck does not have enough cards
+   * @throws IllegalStateException    if the game has already started or is over.
+   * @throws IllegalArgumentException if the deck does not have enough cards.
    */
   void startGame(List<Card> deck);
 

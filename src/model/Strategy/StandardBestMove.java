@@ -4,14 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.ReadOnlyThreeThriosModel;
+import model.ReadOnlyThreeTriosModel;
 import model.cell.Cell;
 import model.player.Player;
 
+/**
+ * Represents the best move position returned by a strategy for the StandardThreeTrios class.
+ */
 public class StandardBestMove implements ReturnBestMove {
 
   private final List<ThreeTriosStrategy> strategies;
 
+  /**
+   * Constructs the class with a List of strategies to evaluate.
+   *
+   * @param strategies the list of strategies the class will evaluate.
+   */
   public StandardBestMove(List<ThreeTriosStrategy> strategies) {
 
     this.strategies = strategies;
@@ -19,7 +27,7 @@ public class StandardBestMove implements ReturnBestMove {
   }
 
   @Override
-  public Map<String, Integer> getBestMove(ReadOnlyThreeThriosModel model, Player player) {
+  public Map<String, Integer> getBestMove(ReadOnlyThreeTriosModel model, Player player) {
 
     for(ThreeTriosStrategy strategy : strategies) {
       Map<String, Integer> move = evaluateStrategy(model, player, strategy);
@@ -33,7 +41,7 @@ public class StandardBestMove implements ReturnBestMove {
 
 
 
-  private Map<String, Integer> evaluateStrategy(ReadOnlyThreeThriosModel model, Player player, ThreeTriosStrategy strategy) {
+  private Map<String, Integer> evaluateStrategy(ReadOnlyThreeTriosModel model, Player player, ThreeTriosStrategy strategy) {
 
     List<Map<String, Integer>> listOfBestMoves = strategy.chooseMove(model, player);
 

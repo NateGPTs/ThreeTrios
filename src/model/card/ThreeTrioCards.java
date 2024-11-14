@@ -33,7 +33,7 @@ public class ThreeTrioCards implements Card {
    * @param attackVals representing the cards attack in a specific direction.
    * @param player     represents the player who owns the card.
    */
-  public ThreeTrioCards(String name, HashMap<Direction, Integer> attackVals, Player player) {
+  public ThreeTrioCards(String name, Map<Direction, Integer> attackVals, Player player) {
 
     if (name == null || name.isEmpty()) {
       throw new IllegalArgumentException("Name cannot be null or empty.");
@@ -69,6 +69,9 @@ public class ThreeTrioCards implements Card {
     this.player = null;
   }
 
+  /**
+   * Constructs a copy of a card based on the given card.
+   */
   public ThreeTrioCards(Card card) {
 
     this.name = card.getName();
