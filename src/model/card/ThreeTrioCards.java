@@ -1,8 +1,9 @@
 package model.card;
 
+import java.awt.Color;
+import java.util.HashMap;
 import java.util.Map;
 import model.player.Player;
-import java.util.HashMap;
 
 
 /**
@@ -94,7 +95,6 @@ public class ThreeTrioCards implements Card {
   }
 
 
-
   /**
    * // Everything from the interface. But also emphasizing that: This method relies on the
    * AttackVals field. Make sure the AttackVals field is properly initialized, in that, each
@@ -123,6 +123,16 @@ public class ThreeTrioCards implements Card {
   @Override
   public String getName() {
     return this.name;
+  }
+
+  @Override
+  public Color getColor() {
+    return this.player.getColor();
+  }
+
+  @Override
+  public Map<Direction, Integer> getAllAttackVals() {
+    return Map.copyOf(this.attackVals);
   }
 
 

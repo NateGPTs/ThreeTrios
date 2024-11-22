@@ -1,4 +1,4 @@
-package ttview;
+package textview;
 
 /**
  * Represents a TextView interface for the game.

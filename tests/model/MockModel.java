@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.Strategy.Corners;
-import model.Strategy.MostFlips;
-import model.Strategy.StrategyUtils;
-import model.Strategy.ThreeTriosStrategy;
+import model.strategy.Corners;
+import model.strategy.MostFlips;
+import model.strategy.StrategyUtils;
+import model.strategy.ThreeTriosStrategy;
 import model.card.Card;
 import model.cell.Cell;
 import model.player.Player;
@@ -54,6 +54,8 @@ public class MockModel extends StandardThreeTrios implements MockModelInterface 
   @Override
   public int flipCount(Card given, int row, int col, Player player) {
     Map<String, Integer> move = new StrategyUtils().createMoveInfo(0, row, col);
+    System.out.printf("Checking (%d,%d) with Card %s: %d flips%n",
+        row, col, given.toString(), super.flipCount(given, row, col, player));
     inspectedMoves.add(move);
     String key = row + "," + col;
     return flipValues.getOrDefault(key, 0);
@@ -94,7 +96,7 @@ public class MockModel extends StandardThreeTrios implements MockModelInterface 
   public void playCorners() {
     clearInspectionLog();
     this.cornerStrat.chooseMove(this, this.currentPlayer());
-    this.inspectedMoves.addAll(((Corners)this.cornerStrat).moveLog());
+    this.inspectedMoves.addAll(((Corners) this.cornerStrat).moveLog());
   }
 
   @Override

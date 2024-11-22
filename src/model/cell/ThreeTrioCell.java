@@ -1,6 +1,9 @@
 package model.cell;
 
+import java.awt.Color;
+import java.util.Map;
 import model.card.Card;
+import model.card.Direction;
 import model.card.ThreeTrioCards;
 import model.player.Player;
 
@@ -64,15 +67,6 @@ public class ThreeTrioCell implements Cell {
     this.col = cell.getCol();
   }
 
-  private Card copyCard(Cell cell) {
-
-    if(cell.getCard() == null) {
-      return null;
-    } else {
-      return new ThreeTrioCards(cell.getCard());
-    }
-  }
-
   /**
    * Represents a constructor that copies a given Cell. And sets its card to the given card.
    *
@@ -85,11 +79,19 @@ public class ThreeTrioCell implements Cell {
 
   }
 
+  private Card copyCard(Cell cell) {
+
+    if (cell.getCard() == null) {
+      return null;
+    } else {
+      return new ThreeTrioCards(cell.getCard());
+    }
+  }
+
   private Boolean getHole() {
 
     return this.hole;
   }
-
 
 
   @Override
@@ -121,7 +123,6 @@ public class ThreeTrioCell implements Cell {
   @Override
   public Card getCard() {
 
-
     return this.card;
   }
 
@@ -136,6 +137,16 @@ public class ThreeTrioCell implements Cell {
   public Player getOwner() {
 
     return this.card.getPlayer();
+  }
+
+  @Override
+  public Map<Direction, Integer> getAllAttackVals() {
+    return this.card.getAllAttackVals();
+  }
+
+  @Override
+  public Color getColor() {
+    return this.card.getColor();
   }
 
   @Override

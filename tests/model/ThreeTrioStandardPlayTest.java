@@ -2,6 +2,9 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import model.card.Card;
 import model.card.Direction;
@@ -10,9 +13,6 @@ import model.cell.Cell;
 import model.grid.StandardPlay;
 import model.player.Player;
 import model.player.ThreeTriosPlayer;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,13 +1,13 @@
-package ttview;
+package textview;
 
+import java.awt.Color;
 import model.ReadOnlyThreeTriosModel;
+import model.StandardThreeTrios.PlayerKey;
 import model.card.Card;
 import model.card.Direction;
 import model.card.ThreeTrioCards;
 import model.cell.Cell;
 import model.player.Player;
-import model.StandardThreeTrios.PlayerKey;
-import java.awt.Color;
 
 /**
  * Represents a text-based view of the Three Trios game. Responsible for rendering the game state in

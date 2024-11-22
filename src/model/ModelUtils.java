@@ -1,17 +1,17 @@
 package model;
 
-import java.util.List;
-import model.card.Card;
-import model.card.Direction;
-import model.card.ThreeTrioCards;
-import model.cell.Cell;
-import model.cell.ThreeTrioCell;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import model.card.Card;
+import model.card.Direction;
+import model.card.ThreeTrioCards;
+import model.cell.Cell;
+import model.cell.ThreeTrioCell;
 
 /**
  * Class for creating the game board and decks based on configuration files. Initialize game

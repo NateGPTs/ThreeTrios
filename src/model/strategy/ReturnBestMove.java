@@ -1,4 +1,4 @@
-package model.Strategy;
+package model.strategy;
 
 import java.util.Map;
 import model.ReadOnlyThreeTriosModel;
@@ -12,10 +12,9 @@ public interface ReturnBestMove {
   /**
    * Return the best move based on the corresponding strategy.
    *
-   * @param model the model given.
+   * @param model  the model given.
    * @param player the player we are applying this move for.
-   * @return a Map<String, Integer> with an "index" key representing a players card hand index,
-   * "row" key row index of the board, "col" key representing column index of board card placement.
+   * @return a Map with a string "index", "row", "col" key representing handIndex, row, column.
    */
   Map<String, Integer> getBestMove(ReadOnlyThreeTriosModel model, Player player);
 

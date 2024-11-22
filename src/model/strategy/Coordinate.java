@@ -1,4 +1,4 @@
-package model.Strategy;
+package model.strategy;
 
 /**
  * An interface representing coordinates with rows and columns in a grid.

@@ -1,4 +1,4 @@
-package model.Strategy;
+package model.strategy;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,7 @@ public interface ThreeTriosStrategy {
   /**
    * Outputs best moves for the CPU, represented by coordinate to card pairings in a hashmap.
    *
-   * @param model The model given.
+   * @param model  The model given.
    * @param player the player doing the move.
    * @return coordinate to card pairings represented by a hashmap.
    */
@@ -22,9 +22,7 @@ public interface ThreeTriosStrategy {
   /**
    * Each strategy has a moveLog to document all the cells and combinations checked.
    *
-   * @return a list of all moves(each represented by a Map<String, Integer>)
-   * with an "index" key representing a players card hand index, row" key row index of the board, "
-   * col" key representing column index of board card placement.
+   * @return a list of all moves  with an "index", "row", "col" key. For hand index, row and column.
    */
   public List<Map<String, Integer>> moveLog();
 

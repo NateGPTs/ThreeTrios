@@ -1,5 +1,7 @@
 package model.card;
 
+import java.awt.Color;
+import java.util.Map;
 import model.player.Player;
 
 /**
@@ -40,5 +42,9 @@ public interface Card {
    * @return the name as a String
    */
   String getName();
+
+  Color getColor();
+
+  Map<Direction, Integer> getAllAttackVals();
 
 }

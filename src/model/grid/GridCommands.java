@@ -27,12 +27,12 @@ public interface GridCommands {
   void executePlay(int row, int col, int handIndex, Player player);
 
   /**
-   * Count the number of potential flips(doesn't mutate actual board).
-   * Of the given coordinates(row, col). With the given card, and player.
+   * Count the number of potential flips(doesn't mutate actual board). Of the given coordinates(row,
+   * col). With the given card, and player.
    *
-   * @param row the row index.
-   * @param col the column index.
-   * @param card the card given.
+   * @param row    the row index.
+   * @param col    the column index.
+   * @param card   the card given.
    * @param player the player this is applying to.
    * @return the number of cards that would have been flipped.
    */
@@ -41,7 +41,7 @@ public interface GridCommands {
   /**
    * Get the adjacent cells in the North, South, East, West direction meeting a given predicate.
    *
-   * @param cell the cell of the board.
+   * @param cell          the cell of the board.
    * @param cellPredicate a predicate outlining a specific condition for adjacent cells.
    * @return a map of cells in each corresponding adjacent direction.
    */

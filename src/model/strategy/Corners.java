@@ -1,4 +1,4 @@
-package model.Strategy;
+package model.strategy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,11 +13,14 @@ import model.player.Player;
 
 /**
  * A strategy implementation for ThreeTrios game that focuses on playing cards in corner positions.
- * This strategy prioritizes placing cards with high attack values in the corners of the game board.
+ * This strategy prioritizes placing cards with high attack values in the corners of the game
+ * board.
  */
 public class Corners implements ThreeTriosStrategy {
 
-  /** Maintains a record of moves and cell inspections performed by this strategy. */
+  /**
+   * Maintains a record of moves and cell inspections performed by this strategy.
+   */
   private final List<Map<String, Integer>> log;
 
   /**
@@ -80,16 +83,17 @@ public class Corners implements ThreeTriosStrategy {
     return cornerCells;
   }
 
-  private List<Map<String, Integer>> highestAttackVal(Player player, List<Direction> directions, Coordinate coord) {
+  private List<Map<String, Integer>> highestAttackVal(Player player, List<Direction> directions,
+      Coordinate coord) {
 
     List<Card> deck = player.getHand();
     List<Map<String, Integer>> highestAttackMap = new ArrayList<Map<String, Integer>>();
     int highestAttackVal = 0;
 
-    for(int index = 0; index < deck.size(); index++) {
+    for (int index = 0; index < deck.size(); index++) {
       Card currCard = deck.get(index);
       int currHighestVal = 0;
-      for(Direction direction : directions) {
+      for (Direction direction : directions) {
         currHighestVal += currCard.getAttackVal(direction);
       }
 
@@ -107,7 +111,7 @@ public class Corners implements ThreeTriosStrategy {
     return highestAttackMap;
   }
 
-  private Map<String, Integer> createMoveInfo (int index, int row, int col) {
+  private Map<String, Integer> createMoveInfo(int index, int row, int col) {
 
     return new StrategyUtils().createMoveInfo(index, row, col);
   }

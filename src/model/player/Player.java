@@ -1,8 +1,10 @@
 package model.player;
 
-import java.util.List;
-import model.card.Card;
+import controller.PlayerFeatures;
 import java.awt.Color;
+import java.util.List;
+import model.ThreeTriosModel;
+import model.card.Card;
 
 /**
  * Represents a player in the Three Trios game with qualities such as their color, hand of cards,
@@ -41,5 +43,8 @@ public interface Player {
    */
   Boolean isCPU();
 
+  void addListener(PlayerFeatures listener);
+
+  void itsYourTurn(ThreeTriosModel model);
 
 }

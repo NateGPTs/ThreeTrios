@@ -1,15 +1,17 @@
 package model;
 
+import controller.ModelFeatures;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
-import model.Strategy.Coordinate;
-import model.Strategy.Corners;
-import model.Strategy.MostFlips;
-import model.Strategy.ReturnBestMove;
-import model.Strategy.StandardBestMove;
-import model.Strategy.ThreeTriosStrategy;
+import model.strategy.Coordinate;
+import model.strategy.Corners;
+import model.strategy.MostFlips;
+import model.strategy.ThreeTriosStrategy;
 import model.card.Card;
 import model.card.Direction;
 import model.cell.Cell;
@@ -18,9 +20,6 @@ import model.grid.GridCommands;
 import model.grid.StandardPlay;
 import model.player.Player;
 import model.player.ThreeTriosPlayer;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Represents a standard Three Trios game. Manages the state, grid, players, and reenforces the
@@ -29,18 +28,17 @@ import java.util.HashMap;
 public class StandardThreeTrios implements ThreeTriosModel {
 
   /**
-   * This field represents a board/grid in the ThreeTrios game.
-   * Represented by a 2D array, where the rows are the first bracket, column the next one.
-   * The grid abides by a 0 based index for its rows and columns.
-   * For example, row 1 column 1 would be Cell[0][0].
+   * This field represents a board/grid in the ThreeTrios game. Represented by a 2D array, where the
+   * rows are the first bracket, column the next one. The grid abides by a 0 based index for its
+   * rows and columns. For example, row 1 column 1 would be Cell[0][0].
    */
   private final Cell[][] grid;
-  private final Map<Direction, BiFunction<Integer, Integer, Cell>> DirectionalValues;
   private final Map<PlayerKey, Player> players;
   private final GridCommands gridCommands;
   protected List<ThreeTriosStrategy> strategies;
   private GameState gameState;
   private Player whoseTurn;
+  private final List<ModelFeatures> features;
 
   /**
    * Constructs a game model using the given grid.
@@ -56,21 +54,22 @@ public class StandardThreeTrios implements ThreeTriosModel {
     this.gameState = GameState.NOT_STARTED;
     this.grid = grid;
     this.gridCommands = new StandardPlay(grid);
-    DirectionalValues = new HashMap<>();
-    DirectionalValues.put(Direction.EAST, (r, c) -> this.grid[r][c + 1]);
-    DirectionalValues.put(Direction.WEST, (r, c) -> this.grid[r][c - 1]);
-    DirectionalValues.put(Direction.NORTH, (r, c) -> this.grid[r - 1][c]);
-    DirectionalValues.put(Direction.SOUTH, (r, c) -> this.grid[r + 1][c]);
+    Map<Direction, BiFunction<Integer, Integer, Cell>> directionalValues = new HashMap<>();
+    directionalValues.put(Direction.EAST, (r, c) -> this.grid[r][c + 1]);
+    directionalValues.put(Direction.WEST, (r, c) -> this.grid[r][c - 1]);
+    directionalValues.put(Direction.NORTH, (r, c) -> this.grid[r - 1][c]);
+    directionalValues.put(Direction.SOUTH, (r, c) -> this.grid[r + 1][c]);
     List<ThreeTriosStrategy> strategies = new ArrayList<>();
-    this.strategies =  strategies;
+    this.strategies = strategies;
     this.strategies.add(new MostFlips());
     this.strategies.add(new Corners());
+    this.features = new ArrayList<>();
   }
 
   /**
    * A constructor that takes in the given grid, and a list of strategies for the cpu player.
    *
-   * @param grid a 2D array of Cell classes.
+   * @param grid       a 2D array of Cell classes.
    * @param strategies a list of strategies for the CPU.
    */
   public StandardThreeTrios(Cell[][] grid, List<ThreeTriosStrategy> strategies) {
@@ -100,6 +99,10 @@ public class StandardThreeTrios implements ThreeTriosModel {
       throw new IllegalArgumentException("Number of non hole grid cells must be odd");
     }
 
+  }
+
+  public void addListener(ModelFeatures listener) {
+    this.features.add(listener);
   }
 
   @Override
@@ -134,6 +137,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
     this.players.put(PlayerKey.TWO, playerTwo);
     this.whoseTurn = playerOne;
     this.gameState = GameState.ONGOING;
+    this.currentPlayer().itsYourTurn(this);
   }
 
   @Override
@@ -144,6 +148,7 @@ public class StandardThreeTrios implements ThreeTriosModel {
     }
 
     if (!isValidMove(row, col)) {
+      System.out.println("Invalid move log");
       throw new IllegalArgumentException("Invalid move.");
     }
 
@@ -151,24 +156,26 @@ public class StandardThreeTrios implements ThreeTriosModel {
 
     if (isGridFull()) {
       this.gameState = GameState.OVER;
+      notifySucessfulMove();
     } else {
       switchPlayerTurn();
+      this.currentPlayer().itsYourTurn(this);
+      notifySucessfulMove();
+      System.out.printf("Played to row %d, col %d%n", row, col);
     }
   }
 
-  @Override
-  public void playToGridCPU() {
+  public void notifySucessfulMove() {
 
-    if(!this.currentPlayer().isCPU()) {
-      throw new IllegalStateException("Player is not CPU");
-    } else {
-
-      ReturnBestMove cpuMove = new StandardBestMove(this.strategies);
-      Map<String, Integer> move = cpuMove.getBestMove(this, this.currentPlayer());
-      playToGrid(move.get("row"), move.get("col"), move.get("index"));
-
+    for (ModelFeatures feature : this.features) {
+      feature.notifyUpdateView();
     }
+
   }
+
+
+
+
 
   /**
    * Determines if player can make the move to the specific location on the grid.

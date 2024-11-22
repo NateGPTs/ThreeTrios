@@ -1,4 +1,4 @@
-package model.Strategy;
+package model.strategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,26 +26,27 @@ public class StandardBestMove implements ReturnBestMove {
 
   }
 
+
   @Override
   public Map<String, Integer> getBestMove(ReadOnlyThreeTriosModel model, Player player) {
 
-    for(ThreeTriosStrategy strategy : strategies) {
+    for (ThreeTriosStrategy strategy : strategies) {
       Map<String, Integer> move = evaluateStrategy(model, player, strategy);
-      if(move != null) {
+      if (move != null) {
         return move;
       }
     }
 
-    return NoValidMoves(model.getGrid(), player);
+    return noValidMoves(model.getGrid(), player);
   }
 
 
-
-  private Map<String, Integer> evaluateStrategy(ReadOnlyThreeTriosModel model, Player player, ThreeTriosStrategy strategy) {
+  private Map<String, Integer> evaluateStrategy(ReadOnlyThreeTriosModel model, Player player,
+      ThreeTriosStrategy strategy) {
 
     List<Map<String, Integer>> listOfBestMoves = strategy.chooseMove(model, player);
 
-    if(listOfBestMoves.isEmpty()) {
+    if (listOfBestMoves.isEmpty()) {
       return null;
 
     } else if (listOfBestMoves.size() == 1) {
@@ -59,13 +60,13 @@ public class StandardBestMove implements ReturnBestMove {
   }
 
 
-  private Map<String, Integer> NoValidMoves (Cell[][] grid, Player player) {
+  private Map<String, Integer> noValidMoves(Cell[][] grid, Player player) {
 
     Map<String, Integer> cardInfo = new HashMap<String, Integer>();
 
-    for(int row = 0; row < grid.length; row++) {
-      for(int col = 0; col < grid[row].length; col++) {
-        if(!grid[row][col].isHole() && grid[row][col].isEmpty()) {
+    for (int row = 0; row < grid.length; row++) {
+      for (int col = 0; col < grid[row].length; col++) {
+        if (!grid[row][col].isHole() && grid[row][col].isEmpty()) {
 
           cardInfo.put("index", 0);
           cardInfo.put("row", row);
@@ -78,7 +79,7 @@ public class StandardBestMove implements ReturnBestMove {
     return cardInfo;
   }
 
-  private Map<String, Integer> breakTie (List<Map<String, Integer>> moves) {
+  private Map<String, Integer> breakTie(List<Map<String, Integer>> moves) {
 
     if (moves.isEmpty()) {
       return null;
@@ -94,9 +95,7 @@ public class StandardBestMove implements ReturnBestMove {
       if (currentRow < minRow) {
         minRow = currentRow;
         minCol = currentCol;
-      }
-
-      else if (currentRow == minRow && currentCol < minCol) {
+      } else if (currentRow == minRow && currentCol < minCol) {
         minCol = currentCol;
       }
     }

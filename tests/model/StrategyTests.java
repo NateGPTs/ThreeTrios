@@ -3,6 +3,7 @@ package model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 import java.util.Map;
 import model.card.Card;
@@ -10,22 +11,32 @@ import model.cell.Cell;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Test suite for the ThreeTrios game strategies. Tests both the MostFlips and Corners strategies to
+ * verify correct implementation. of game rules and decisions.
+ */
 public class StrategyTests {
-  private ModelUtils utils;
+
   private MockModel model;
   private Cell[][] grid;
-  private List<Card> testDeck;
 
+  /**
+   * Sets up the test environment before each test. Initializes a new mock model with a standard
+   * board and test deck.
+   */
   @Before
   public void setUp() {
-    utils = new ModelUtils();
+    ModelUtils utils = new ModelUtils();
     grid = utils.createBoard("FourByFourBoard");
-    testDeck = utils.createDeck("testCardDeck");
+    List<Card> testDeck = utils.createDeck("testCardDeck");
     model = new MockModel(grid);
     model.startGame(testDeck);
   }
 
-  // Test 1: Verify MostFlips checks all valid locations
+  /**
+   * Tests that the MostFlips strategy inspects all valid positions on the board. Verifies that each
+   * empty, non-hole cell is checked with each card in hand.
+   */
   @Test
   public void testMostFlipsChecksAllValidLocations() {
     // Play MostFlips strategy
@@ -55,7 +66,11 @@ public class StrategyTests {
     );
   }
 
-  // Test 2: Verify MostFlips chooses highest value move
+  /**
+   * Tests that the MostFlips strategy correctly identifies and chooses the move that results in the
+   * most card flips. Sets up different flip values for different positions and verifies the
+   * strategy chooses the position with the highest value.
+   */
   @Test
   public void testMostFlipsChoosesHighestValueMove() {
 
@@ -76,7 +91,11 @@ public class StrategyTests {
         ));
   }
 
-  // Test 3: Verify MostFlips handles multiple moves with same value
+  /**
+   * Tests how the MostFlips strategy handles multiple moves that result in the same number of
+   * flips. Verifies that all equally good moves are identified and included in the possible moves
+   * list.
+   */
   @Test
   public void testMostFlipsHandlesEqualValues() {
     // Set up multiple locations with same flip value
@@ -98,14 +117,21 @@ public class StrategyTests {
     boolean found2_2 = false;
 
     for (Map<String, Integer> move : bestMoves) {
-      if (move.get("row") == 1 && move.get("col") == 1) found1_1 = true;
-      if (move.get("row") == 2 && move.get("col") == 2) found2_2 = true;
+      if (move.get("row") == 1 && move.get("col") == 1) {
+        found1_1 = true;
+      }
+      if (move.get("row") == 2 && move.get("col") == 2) {
+        found2_2 = true;
+      }
     }
 
     assertTrue("Missing some equal-value moves", found1_1 && found2_2);
   }
 
-  // Test 4: Verify Corners strategy checks all valid corners
+  /**
+   * Tests that the Corners strategy properly evaluates all valid corner positions. Verifies that
+   * each corner that is neither a hole nor occupied is checked.
+   */
   @Test
   public void testCornersChecksAllValidCorners() {
     // Play Corners strategy
@@ -113,7 +139,7 @@ public class StrategyTests {
     List<Map<String, Integer>> inspectedMoves = model.getInspectedMoves();
 
     // Define all corner coordinates
-    int[][] corners = {{0,0}, {0,3}, {3,0}, {3,3}};
+    int[][] corners = {{0, 0}, {0, 3}, {3, 0}, {3, 3}};
 
     // Check each corner was inspected if it's valid
     for (int[] corner : corners) {
@@ -128,7 +154,11 @@ public class StrategyTests {
     }
   }
 
-  // Test 5: Verify Corners strategy ignores non-corner positions
+  /**
+   * Tests that the Corners strategy properly ignores non-corner positions. Verifies that the
+   * strategy does not consider moves in the middle or along the edges of the board (except
+   * corners).
+   */
   @Test
   public void testCornersIgnoresNonCornerPositions() {
     // Play Corners strategy
@@ -144,7 +174,10 @@ public class StrategyTests {
         containsMove(inspectedMoves, 1, 2));
   }
 
-  // Test 6: Verify Corners strategy handles invalid corners
+  /**
+   * Tests that the Corners strategy properly handles invalid corner positions. Verifies that
+   * corners marked as invalid are not considered as possible moves.
+   */
   @Test
   public void testCornersHandlesInvalidCorners() {
 
@@ -159,6 +192,7 @@ public class StrategyTests {
     assertFalse("Should not include invalid corner in moves",
         containsMove(inspectedMoves, 0, 0));
   }
+
 
   private boolean containsMove(List<Map<String, Integer>> moves, int row, int col) {
     return moves.stream().anyMatch(move ->

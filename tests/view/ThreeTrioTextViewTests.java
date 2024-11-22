@@ -3,21 +3,20 @@ package view;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import model.ModelUtils;
+import model.StandardThreeTrios;
+import model.StandardThreeTrios.PlayerKey;
 import model.card.Card;
 import model.card.Direction;
 import model.card.ThreeTrioCards;
 import model.cell.Cell;
 import model.player.Player;
-import model.ModelUtils;
-import model.StandardThreeTrios;
-import model.StandardThreeTrios.PlayerKey;
-import ttview.ThreeTrioTextView;
-import java.util.ArrayList;
-import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
+import textview.ThreeTrioTextView;
 
 
 /**
@@ -72,7 +71,7 @@ public class ThreeTrioTextViewTests {
     model.startGame(this.deck);
     Player playerRed = model.getPlayers().get(PlayerKey.ONE);
 
-    HashMap<Direction, Integer> attackVals = new HashMap<>() {{
+    Map<Direction, Integer> attackVals = new HashMap<>() {{
         put(Direction.NORTH, 1);
         put(Direction.EAST, 2);
         put(Direction.SOUTH, 3);

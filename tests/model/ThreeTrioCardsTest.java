@@ -2,9 +2,9 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
 import model.card.Direction;
 import model.card.ThreeTrioCards;
-import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 

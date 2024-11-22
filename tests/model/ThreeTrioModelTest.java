@@ -5,20 +5,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import model.Strategy.Coord;
-import model.Strategy.Coordinate;
-import model.Strategy.Corners;
-import model.Strategy.MostFlips;
-import model.Strategy.ThreeTriosStrategy;
+import model.StandardThreeTrios.PlayerKey;
+import model.strategy.Coord;
+import model.strategy.Coordinate;
+import model.strategy.Corners;
+import model.strategy.MostFlips;
+import model.strategy.ThreeTriosStrategy;
 import model.card.Card;
 import model.card.Direction;
 import model.cell.Cell;
 import model.player.Player;
-import model.StandardThreeTrios.PlayerKey;
-import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -320,38 +320,9 @@ public class ThreeTrioModelTest {
 
   }
 
-  @Test
-  public void debugMostFlipsStrategy() {
-    ThreeTriosStrategy mostFlips = new MostFlips();
-    this.model3.startGame(this.cardDeck2);
-    Player player1 = this.model3.getPlayers().get(PlayerKey.ONE);
-    Player player2 = this.model3.getPlayers().get(PlayerKey.TWO);
-
-    // Print initial state
-    System.out.println("Player 1 hand size: " + player1.getHand().size());
-    for (Card card : player1.getHand()) {
-      System.out.println("Card in hand: " +
-          card.getAttackVal(Direction.NORTH) + "," +
-          card.getAttackVal(Direction.SOUTH) + "," +
-          card.getAttackVal(Direction.EAST) + "," +
-          card.getAttackVal(Direction.WEST));
-    }
-
-    // Add weak card
-    Card weakestCard = this.testDeck.get(1);
-    weakestCard.setPlayer(player2);
-    this.fiveByFiveBoardWithHoles[3][0].addCard(weakestCard);
-
-    List<Map<String, Integer>> moves = mostFlips.chooseMove(this.model3, player1);
-
-    // Print all moves found
-    System.out.println("\nAll moves found:");
-    for (Map<String, Integer> move : moves) {
-      System.out.printf("Hand: %d, Row: %d, Col: %d%n",
-          move.get("index"), move.get("row"), move.get("col"));
-    }
-  }
-
+  /**
+   * Tests the mostFlipsStrategy.
+   */
   @Test
   public void mostFlipsStrategy() {
 
@@ -377,8 +348,8 @@ public class ThreeTrioModelTest {
   }
 
   /**
-   * Tests the grid dimension methods (gridWidth and gridHeight) to ensure they return
-   * correct dimensions for different board sizes.
+   * Tests the grid dimension methods (gridWidth and gridHeight) to ensure they return correct
+   * dimensions for different board sizes.
    */
   @Test
   public void testGridDimensions() {
@@ -391,8 +362,8 @@ public class ThreeTrioModelTest {
   }
 
   /**
-   * Tests the getCell method to verify it correctly retrieves cells at given coordinates
-   * and properly reflects game state changes.
+   * Tests the getCell method to verify it correctly retrieves cells at given coordinates and
+   * properly reflects game state changes.
    */
   @Test
   public void testGetCell() {
@@ -412,8 +383,8 @@ public class ThreeTrioModelTest {
   }
 
   /**
-   * Tests the whoOwns method to verify cell ownership tracking.
-   * Checks both empty cells and cells after card placement.
+   * Tests the whoOwns method to verify cell ownership tracking. Checks both empty cells and cells
+   * after card placement.
    */
   @Test
   public void testWhoOwns() {
@@ -428,8 +399,8 @@ public class ThreeTrioModelTest {
   }
 
   /**
-   * Tests the flipCount method to verify correct calculation of potential card flips.
-   * Uses known card values to test flip mechanics.
+   * Tests the flipCount method to verify correct calculation of potential card flips. Uses known
+   * card values to test flip mechanics.
    */
   @Test
   public void testFlipCount() {
@@ -450,8 +421,8 @@ public class ThreeTrioModelTest {
   }
 
   /**
-   * Tests the playerScore method to verify correct score calculation.
-   * Checks scores both before and after card placement.
+   * Tests the playerScore method to verify correct score calculation. Checks scores both before and
+   * after card placement.
    */
   @Test
   public void testPlayerScore() {
@@ -470,8 +441,8 @@ public class ThreeTrioModelTest {
   }
 
   /**
-   * Tests that constructor properly handles null grid parameter.
-   * Expects an IllegalArgumentException to be thrown.
+   * Tests that constructor properly handles null grid parameter. Expects an
+   * IllegalArgumentException to be thrown.
    */
   @Test(expected = IllegalArgumentException.class)
   public void testNullGridConstructor() {
@@ -495,11 +466,9 @@ public class ThreeTrioModelTest {
   }
 
 
-
-
   /**
-   * Tests the getAdjacentCells method to verify correct identification of
-   * neighboring cells with various predicates.
+   * Tests the getAdjacentCells method to verify correct identification of neighboring cells with
+   * various predicates.
    */
   @Test
   public void testGetAdjacentCells() {

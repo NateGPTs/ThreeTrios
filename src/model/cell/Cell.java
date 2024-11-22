@@ -1,6 +1,9 @@
 package model.cell;
 
+import java.awt.Color;
+import java.util.Map;
 import model.card.Card;
+import model.card.Direction;
 import model.player.Player;
 
 /**
@@ -72,4 +75,8 @@ public interface Cell {
    * Get the owner of the card.
    */
   Player getOwner();
+
+  Map<Direction, Integer> getAllAttackVals();
+
+  Color getColor();
 }

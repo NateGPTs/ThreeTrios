@@ -1,4 +1,4 @@
-package model.Strategy;
+package model.strategy;
 
 /**
  * Represents a coordinate: which is a row and column integer.

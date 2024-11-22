@@ -1,8 +1,11 @@
 package model.grid;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import model.card.Card;
 import model.card.Direction;
@@ -10,9 +13,6 @@ import model.card.ThreeTrioCards;
 import model.cell.Cell;
 import model.cell.ThreeTrioCell;
 import model.player.Player;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.function.BiFunction;
 
 /**
  * Represents a standard play system for a Three Trios grid-based game. Each cell on the grid can
@@ -117,7 +117,7 @@ public class StandardPlay implements GridCommands {
   /**
    * Simulates a card play to count how many cells would flip, without actually making the moves.
    *
-   * @param card Card to simulate playing
+   * @param card   Card to simulate playing
    * @param player Player making the move
    * @return Number of cells that would flip
    */
@@ -163,8 +163,6 @@ public class StandardPlay implements GridCommands {
   }
 
 
-
-
   private void clashAdjacentCards(Cell given, ArrayList<Cell> convertedCells) {
 
     Map<Direction, Cell> adjacentCells = getAdjacentOccupiedCells(given);
@@ -188,7 +186,7 @@ public class StandardPlay implements GridCommands {
 
   private boolean inBoundsForHand(int handIndex) {
 
-    return handIndex >= 0 && handIndex < this.grid.length;
+    return handIndex >= 0 && handIndex < this.player.getHand().size();
 
   }
 
@@ -228,8 +226,6 @@ public class StandardPlay implements GridCommands {
     }
 
   }
-
-
 
 
 }

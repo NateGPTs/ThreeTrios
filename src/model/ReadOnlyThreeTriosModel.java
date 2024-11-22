@@ -3,7 +3,7 @@ package model;
 import java.util.Map;
 import java.util.function.Predicate;
 import model.StandardThreeTrios.PlayerKey;
-import model.Strategy.Coordinate;
+import model.strategy.Coordinate;
 import model.card.Card;
 import model.card.Direction;
 import model.cell.Cell;
@@ -79,9 +79,9 @@ public interface ReadOnlyThreeTriosModel {
    * Calculate how many cards would be flipped if a given card was played at the given row and
    * column, for the given player.
    *
-   * @param given the given card.
-   * @param row Integer representing the row index of a grid in a 2d array.
-   * @param col Integer representing the column index of a grid in a 2d array.
+   * @param given  the given card.
+   * @param row    Integer representing the row index of a grid in a 2d array.
+   * @param col    Integer representing the column index of a grid in a 2d array.
    * @param player the player this play is to simulate for.
    * @return an Integer representing how many cards will flip.
    */
@@ -103,10 +103,10 @@ public interface ReadOnlyThreeTriosModel {
   boolean isGameOver();
 
   /**
-   * Get the adjacent cell in North, South, East, West directions(if such exists) that meet.
-   * The criteria of the given predicate.
+   * Get the adjacent cell in North, South, East, West directions(if such exists) that meet. The
+   * criteria of the given predicate.
    *
-   * @param coord coordinates of the cell to check its adjacent neighbours.
+   * @param coord         coordinates of the cell to check its adjacent neighbours.
    * @param cellPredicate the conditions adjacent cells have to meet to be put in the map.
    * @return a map of the direction to cell.
    */

@@ -1,5 +1,6 @@
 package model;
 
+import controller.ModelFeatures;
 import java.util.List;
 import model.card.Card;
 
@@ -20,10 +21,7 @@ public interface ThreeTriosModel extends ReadOnlyThreeTriosModel {
    */
   void playToGrid(int row, int col, int handIndex);
 
-  /**
-   * Plays a move on behalf of the CPU player (not implemented yet).
-   */
-  void playToGridCPU();
+
 
   /**
    * Starts the game with the given deck of cards, and sets up the game state, players, and initial
@@ -34,5 +32,7 @@ public interface ThreeTriosModel extends ReadOnlyThreeTriosModel {
    * @throws IllegalArgumentException if the deck does not have enough cards.
    */
   void startGame(List<Card> deck);
+
+  void addListener(ModelFeatures features);
 
 }

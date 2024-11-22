@@ -1,4 +1,4 @@
-package model.Strategy;
+package model.strategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +9,15 @@ import model.cell.Cell;
 import model.player.Player;
 
 /**
- * Represents a strategy for the CPU that prioritizes moves which flip the most opponent cards.
- * This strategy evaluates each possible move based on how many opponent cards it can capture
- * and selects the moves that result in the maximum number of flips.
+ * Represents a strategy for the CPU that prioritizes moves which flip the most opponent cards. This
+ * strategy evaluates each possible move based on how many opponent cards it can capture and selects
+ * the moves that result in the maximum number of flips.
  */
 public class MostFlips implements ThreeTriosStrategy {
 
   /**
-   * Maintains a record of moves and their evaluations performed by this strategy.
-   * Each entry in the list is a map containing the move details (card index and position).
+   * Maintains a record of moves and their evaluations performed by this strategy. Each entry in the
+   * list is a map containing the move details (card index and position).
    */
   private final List<Map<String, Integer>> log;
 
@@ -38,17 +38,14 @@ public class MostFlips implements ThreeTriosStrategy {
   }
 
   /**
-   * Determines the optimal moves by evaluating every possible card placement
-   * and selecting those that result in the most opponent card flips.
-   * For each card in the player's hand, this method:
-   * - Checks every valid position on the grid
-   * - Calculates how many opponent cards would be flipped
-   * - Keeps track of moves that result in the maximum number of flips
+   * Determines the optimal moves by evaluating every possible card placement and selecting those
+   * that result in the most opponent card flips. For each card in the player's hand, this method: -
+   * Checks every valid position on the grid - Calculates how many opponent cards would be flipped -
+   * Keeps track of moves that result in the maximum number of flips
    *
-   * @param model the current state of the game
+   * @param model  the current state of the game
    * @param player the player for whom moves should be calculated
-   * @return a list of moves that would result in the maximum number of flips,
-   *         where each move is represented as a map containing card index and target position
+   * @return a list of moves where each move is represented as a map w/ card index and position.
    */
   public List<Map<String, Integer>> chooseMove(ReadOnlyThreeTriosModel model,
       Player player) {
@@ -85,11 +82,10 @@ public class MostFlips implements ThreeTriosStrategy {
     return this.log;
   }
 
-  private Map<String, Integer> createMoveInfo (int index, int row, int col) {
+  private Map<String, Integer> createMoveInfo(int index, int row, int col) {
 
-      return new StrategyUtils().createMoveInfo(index, row, col);
+    return new StrategyUtils().createMoveInfo(index, row, col);
   }
-
 
 
 }
