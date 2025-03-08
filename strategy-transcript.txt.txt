@@ -1,0 +1,50 @@
+Checking (0,0) with Card model.card.ThreeTrioCards@382db087: 0 flips
+Checking (0,1) with Card model.card.ThreeTrioCards@382db087: 0 flips
+Checking (0,2) with Card model.card.ThreeTrioCards@382db087: 0 flips
+Checking (1,0) with Card model.card.ThreeTrioCards@382db087: 0 flips
+Checking (1,1) with Card model.card.ThreeTrioCards@382db087: 0 flips
+Checking (1,2) with Card model.card.ThreeTrioCards@382db087: 0 flips
+Checking (2,0) with Card model.card.ThreeTrioCards@382db087: 0 flips
+Checking (2,1) with Card model.card.ThreeTrioCards@382db087: 0 flips
+Checking (2,2) with Card model.card.ThreeTrioCards@382db087: 0 flips
+Checking (0,0) with Card model.card.ThreeTrioCards@15bfd87: 0 flips
+Checking (0,1) with Card model.card.ThreeTrioCards@15bfd87: 0 flips
+Checking (0,2) with Card model.card.ThreeTrioCards@15bfd87: 0 flips
+Checking (1,0) with Card model.card.ThreeTrioCards@15bfd87: 0 flips
+Checking (1,1) with Card model.card.ThreeTrioCards@15bfd87: 0 flips
+Checking (1,2) with Card model.card.ThreeTrioCards@15bfd87: 0 flips
+Checking (2,0) with Card model.card.ThreeTrioCards@15bfd87: 0 flips
+Checking (2,1) with Card model.card.ThreeTrioCards@15bfd87: 0 flips
+Checking (2,2) with Card model.card.ThreeTrioCards@15bfd87: 0 flips
+Checking (0,0) with Card model.card.ThreeTrioCards@543e710e: 0 flips
+Checking (0,1) with Card model.card.ThreeTrioCards@543e710e: 0 flips
+Checking (0,2) with Card model.card.ThreeTrioCards@543e710e: 0 flips
+Checking (1,0) with Card model.card.ThreeTrioCards@543e710e: 0 flips
+Checking (1,1) with Card model.card.ThreeTrioCards@543e710e: 0 flips
+Checking (1,2) with Card model.card.ThreeTrioCards@543e710e: 0 flips
+Checking (2,0) with Card model.card.ThreeTrioCards@543e710e: 0 flips
+Checking (2,1) with Card model.card.ThreeTrioCards@543e710e: 0 flips
+Checking (2,2) with Card model.card.ThreeTrioCards@543e710e: 0 flips
+Checking (0,0) with Card model.card.ThreeTrioCards@57f23557: 0 flips
+Checking (0,1) with Card model.card.ThreeTrioCards@57f23557: 0 flips
+Checking (0,2) with Card model.card.ThreeTrioCards@57f23557: 0 flips
+Checking (1,0) with Card model.card.ThreeTrioCards@57f23557: 0 flips
+Checking (1,1) with Card model.card.ThreeTrioCards@57f23557: 0 flips
+Checking (1,2) with Card model.card.ThreeTrioCards@57f23557: 0 flips
+Checking (2,0) with Card model.card.ThreeTrioCards@57f23557: 0 flips
+Checking (2,1) with Card model.card.ThreeTrioCards@57f23557: 0 flips
+Checking (2,2) with Card model.card.ThreeTrioCards@57f23557: 0 flips
+Checking (0,0) with Card model.card.ThreeTrioCards@3d0f8e03: 0 flips
+Checking (0,1) with Card model.card.ThreeTrioCards@3d0f8e03: 0 flips
+Checking (0,2) with Card model.card.ThreeTrioCards@3d0f8e03: 0 flips
+Checking (1,0) with Card model.card.ThreeTrioCards@3d0f8e03: 0 flips
+Checking (1,1) with Card model.card.ThreeTrioCards@3d0f8e03: 0 flips
+Checking (1,2) with Card model.card.ThreeTrioCards@3d0f8e03: 0 flips
+Checking (2,0) with Card model.card.ThreeTrioCards@3d0f8e03: 0 flips
+Checking (2,1) with Card model.card.ThreeTrioCards@3d0f8e03: 0 flips
+Checking (2,2) with Card model.card.ThreeTrioCards@3d0f8e03: 0 flips
+
+
+
+---
+Note: Chosen position and card wasn't logged.
