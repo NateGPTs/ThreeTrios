@@ -6,7 +6,7 @@ How to run:
 
 ----------------------------------------------------------
 
-**Once the game starts, two windows will show up, and the two windows are overlapped over each other. So make sure to drag one of the windows away to see both.**
+**Once the game starts, two windows will show up, and the two windows are overlapped over each other. So make sure to drag one of the windows away to see both.** I created a version that implements AI, but this one has two windows for each player, who has to manually input their moves on the same device.
 
 ----------------------------------------------------------
 
